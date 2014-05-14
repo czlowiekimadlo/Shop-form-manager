@@ -1,3 +1,10 @@
-quak_shops_core_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: QuakShopsCoreBundle:Default:index }
+main_redirect:
+    pattern: /
+    defaults: { _controller: QuakShopsCoreBundle:Access:index }
+
+login:
+    pattern:  /login
+    defaults: { _controller: QuakShopsCoreBundle:Access:login }
+
+login_check:
+    pattern: /login_check
