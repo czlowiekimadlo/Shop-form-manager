@@ -1,0 +1,12 @@
+quak_shops_report:
+    resource: "@QuakShopsReportBundle/Resources/config/routing.yml"
+    prefix:   /core
+
+quak_shops_admin:
+    resource: "@QuakShopsAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+quak_shops_core:
+    resource: "@QuakShopsCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+

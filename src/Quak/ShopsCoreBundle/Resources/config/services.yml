@@ -1,0 +1,7 @@
+parameters:
+#    quak_shops_core.example.class: Quak\ShopsCoreBundle\Example
+
+services:
+#    quak_shops_core.example:
+#        class: %quak_shops_core.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
