@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 class AccessControllerTest extends FunctionalTestCase
 {
     /**
-     * @covers Quak\ShopsCoreBundle\Controller\AccessController::indesAction
+     * @covers Quak\ShopsCoreBundle\Controller\AccessController::indexAction
      */
-    public function testIndex_redirectedToLogin_notLoggedIn()
+    public function testIndexAction_redirectedToLogin_notLoggedIn()
     {
         $this->client->request('GET', '/');
 
@@ -22,6 +22,17 @@ class AccessControllerTest extends FunctionalTestCase
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
         $this->assertRegExp('/.*\/login$/', $location);
+    }
+
+    /**
+     * @covers Quak\ShopsCoreBundle\Controller\AccessController::loginAction
+     */
+    public function testLoginAction_formOpens_notLoggedIn()
+    {
+        $this->client->request('GET', '/login');
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
 

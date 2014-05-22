@@ -1,6 +1,6 @@
 quak_shops_report:
     resource: "@QuakShopsReportBundle/Resources/config/routing.yml"
-    prefix:   /core
+    prefix:   /report
 
 quak_shops_admin:
     resource: "@QuakShopsAdminBundle/Resources/config/routing.yml"
