@@ -72,7 +72,7 @@ class UserTest extends UnitTestCase
      */
     public function testGetRoles()
     {
-        $expectedRoles = array(User::ROLE_USER);
+        $expectedRoles = array();
 
         $this->assertEquals($expectedRoles, $this->user->getRoles());
     }

@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Quak\ShopsCoreBundle\QuakShopsCoreBundle(),
             new Quak\ShopsAdminBundle\QuakShopsAdminBundle(),
             new Quak\ShopsReportBundle\QuakShopsReportBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

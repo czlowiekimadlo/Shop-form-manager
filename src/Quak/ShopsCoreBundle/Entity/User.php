@@ -42,7 +42,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="array", nullable=false)
      */
-    private $roles = array(self::ROLE_USER);
+    private $roles = array();
 
     /**
      * @param int $id
