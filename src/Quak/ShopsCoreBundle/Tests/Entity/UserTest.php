@@ -125,13 +125,15 @@ class UserTest extends UnitTestCase
         $username = 'test';
         $password = 'password';
         $roles = array(User::ROLE_SHOP);
+        $name = "Name";
 
         $expected = serialize(
             array(
                 $id,
                 $username,
                 $password,
-                $roles
+                $roles,
+                $name
             )
         );
 
@@ -139,6 +141,7 @@ class UserTest extends UnitTestCase
         $this->user->setUsername($username);
         $this->user->setPassword($password);
         $this->user->setRoles($roles);
+        $this->user->setName($name);
 
         $result = $this->user->serialize();
 
@@ -154,12 +157,14 @@ class UserTest extends UnitTestCase
         $username = 'test';
         $password = 'password';
         $roles = array(User::ROLE_SHOP);
+        $name = "Name";
 
         $serialized = serialize(array(
             $id,
             $username,
             $password,
-            $roles
+            $roles,
+            $name
         ));
 
         $this->user->unserialize($serialized);
@@ -168,5 +173,6 @@ class UserTest extends UnitTestCase
         $this->assertEquals($username, $this->user->getUsername());
         $this->assertEquals($password, $this->user->getPassword());
         $this->assertEquals($roles, $this->user->getRoles());
+        $this->assertEquals($name, $this->user->getName());
     }
 }

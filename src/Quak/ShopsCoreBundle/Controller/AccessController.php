@@ -4,6 +4,7 @@ namespace Quak\ShopsCoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Quak\ShopsCoreBundle\Entity\User;
 
 /**
  * Access Controller class
@@ -17,6 +18,18 @@ class AccessController extends Controller
      */
     public function indexAction()
     {
+        $securityContext = $this->get('security.context');
+
+        if ($securityContext->isGranted(User::ROLE_ADMIN)) {
+            return $this->redirect(
+                $this->generateUrl('quak_shops_admin_index'));
+        }
+
+        if ($securityContext->isGranted(User::ROLE_SHOP)) {
+            return $this->redirect(
+                $this->generateUrl('quak_shops_report_index'));
+        }
+
         return $this->render('QuakShopsCoreBundle:Access:index.html.twig');
     }
 

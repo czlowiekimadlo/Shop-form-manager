@@ -21,7 +21,7 @@ class AccessControllerTest extends FunctionalTestCase
         $location = $response->headers->get('location');
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
-        $this->assertEquals('http://localhost/login', $location);
+        $this->assertEqualRoutes('login', $location);
     }
 
     /**
@@ -38,16 +38,16 @@ class AccessControllerTest extends FunctionalTestCase
     /**
      * Login test
      *
-     * @param string $username         user name
-     * @param string $password         password
-     * @param string $expectedRedirect expected redirect path
+     * @param string $username      user name
+     * @param string $password      password
+     * @param string $expectedRoute expected redirect route
      *
      * @dataProvider dataProvider_testLoginAction_userLoggingIn
      */
     public function testLoginAction_userLoggingIn(
         $username,
         $password,
-        $expectedRedirect
+        $expectedRoute
     )
     {
         $this->authenticateUser($username, $password);
@@ -56,7 +56,7 @@ class AccessControllerTest extends FunctionalTestCase
         $location = $response->headers->get('location');
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
-        $this->assertEquals($expectedRedirect, $location);
+        $this->assertEqualRoutes($expectedRoute, $location);
     }
 
     /**
@@ -65,9 +65,43 @@ class AccessControllerTest extends FunctionalTestCase
     public function dataProvider_testLoginAction_userLoggingIn()
     {
         return array(
-            array('admin', 'admin1', 'http://localhost/'),
-            array('admin', 'invalid', 'http://localhost/login'),
-            array('invalid', 'invalid', 'http://localhost/login')
+            array('admin', 'admin1', 'homepage'),
+            array('admin', 'invalid', 'login'),
+            array('invalid', 'invalid', 'login')
         );
+    }
+
+    /**
+     * @covers Quak\ShopsCoreBundle\Controller\AccessController::indexAction
+     */
+    public function testIndexAction_redirectToAdmin()
+    {
+        $username = 'admin';
+        $password = 'admin1';
+        $this->authenticateUser($username, $password);
+
+        $this->client->request('GET', '/');
+        $response = $this->client->getResponse();
+        $location = $response->headers->get('location');
+
+        $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
+        $this->assertEqualRoutes('quak_shops_admin_index', $location);
+    }
+
+    /**
+     * @covers Quak\ShopsCoreBundle\Controller\AccessController::indexAction
+     */
+    public function testIndexAction_redirectToReport()
+    {
+        $username = 'demoShop';
+        $password = 'demo';
+        $this->authenticateUser($username, $password);
+
+        $this->client->request('GET', '/');
+        $response = $this->client->getResponse();
+        $location = $response->headers->get('location');
+
+        $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
+        $this->assertEqualRoutes('quak_shops_report_index', $location);
     }
 }

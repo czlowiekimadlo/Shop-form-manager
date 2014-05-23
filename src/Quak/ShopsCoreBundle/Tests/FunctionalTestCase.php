@@ -14,11 +14,20 @@ abstract class FunctionalTestCase extends WebTestCase
     protected $client;
 
     /**
+     * @var Symfony\Component\Routing\Router
+     */
+    protected $router;
+
+    /**
      * Tests setup
      */
     public function setUp()
     {
         $this->client = static::createClient();
+
+        $container = $this->client->getContainer();
+
+        $this->router = $container->get('router');
     }
 
     /**
@@ -41,5 +50,30 @@ abstract class FunctionalTestCase extends WebTestCase
         $form['_password'] = $password;
 
         $this->client->submit($form);
+    }
+
+    /**
+     * @param string $route      route alias
+     * @param array  $parameters route parameters
+     *
+     * @return string
+     */
+    protected function generateUrl($route, array $parameters = array())
+    {
+        return $this->router->generate($route, $parameters);
+    }
+
+    /**
+     * @param string      $route      expected route name
+     * @param string      $url        url to test
+     * @param string|null $comment    assertion comment
+     * @param array       $parameters expected route parameters
+     */
+    protected function assertEqualRoutes($route, $url, $comment = null, array $parameters = array())
+    {
+        $testedRoute = str_replace('http://localhost', '', $url);
+        $expectedRoute = $this->router->generate($route, $parameters);
+
+        $this->assertEquals($expectedRoute, $testedRoute, $comment);
     }
 }

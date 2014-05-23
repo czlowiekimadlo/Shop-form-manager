@@ -20,7 +20,7 @@ class AdminControllerTest extends FunctionalTestCase
         $location = $response->headers->get('location');
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
-        $this->assertRegExp('/.*\/login$/', $location);
+        $this->assertEqualRoutes('login', $location);
     }
 
     /**

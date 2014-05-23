@@ -20,6 +20,20 @@ class ReportControllerTest extends FunctionalTestCase
         $location = $response->headers->get('location');
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
-        $this->assertRegExp('/.*\/login$/', $location);
+        $this->assertEqualRoutes('login', $location);
+    }
+
+    /**
+     * @covers Quak\ShopsAdminBundle\Controller\AdminController::indexAction
+     */
+    public function testIndexAction_showAdminIndex_loggedAsAdmin()
+    {
+        $username = 'demoShop';
+        $password = 'demo';
+        $this->authenticateUser($username, $password);
+
+        $this->client->request('GET', '/report/');
+        $response = $this->client->getResponse();
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 }
