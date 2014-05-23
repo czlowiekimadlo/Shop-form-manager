@@ -45,6 +45,13 @@ class User implements UserInterface, \Serializable
     private $roles = array();
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
+     */
+    private $name;
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -114,6 +121,22 @@ class User implements UserInterface, \Serializable
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

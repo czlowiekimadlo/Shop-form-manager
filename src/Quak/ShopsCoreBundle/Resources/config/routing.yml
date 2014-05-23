@@ -1,4 +1,4 @@
-main_redirect:
+homepage:
     pattern: /
     defaults: { _controller: QuakShopsCoreBundle:Access:index }
 

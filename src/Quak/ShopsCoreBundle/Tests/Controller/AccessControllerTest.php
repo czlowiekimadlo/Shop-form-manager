@@ -21,7 +21,7 @@ class AccessControllerTest extends FunctionalTestCase
         $location = $response->headers->get('location');
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
-        $this->assertRegExp('/.*\/login$/', $location);
+        $this->assertEquals('http://localhost/login', $location);
     }
 
     /**
@@ -35,5 +35,39 @@ class AccessControllerTest extends FunctionalTestCase
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
+    /**
+     * Login test
+     *
+     * @param string $username         user name
+     * @param string $password         password
+     * @param string $expectedRedirect expected redirect path
+     *
+     * @dataProvider dataProvider_testLoginAction_userLoggingIn
+     */
+    public function testLoginAction_userLoggingIn(
+        $username,
+        $password,
+        $expectedRedirect
+    )
+    {
+        $this->authenticateUser($username, $password);
 
+        $response = $this->client->getResponse();
+        $location = $response->headers->get('location');
+
+        $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
+        $this->assertEquals($expectedRedirect, $location);
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProvider_testLoginAction_userLoggingIn()
+    {
+        return array(
+            array('admin', 'admin1', 'http://localhost/'),
+            array('admin', 'invalid', 'http://localhost/login'),
+            array('invalid', 'invalid', 'http://localhost/login')
+        );
+    }
 }

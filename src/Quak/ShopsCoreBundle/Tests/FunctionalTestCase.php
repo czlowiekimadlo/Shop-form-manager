@@ -28,4 +28,18 @@ abstract class FunctionalTestCase extends WebTestCase
     {
         $this->client = null;
     }
+
+    /**
+     * @param string $username user name
+     * @param string $password password
+     */
+    protected function authenticateUser($username, $password)
+    {
+        $crawler = $this->client->request('GET', '/login');
+        $form = $crawler->selectButton('submit')->form();
+        $form['_username'] = $username;
+        $form['_password'] = $password;
+
+        $this->client->submit($form);
+    }
 }

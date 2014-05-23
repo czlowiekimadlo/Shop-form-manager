@@ -98,9 +98,22 @@ class UserTest extends UnitTestCase
     {
         $password = 'password';
 
-        $this->user->SetPassword($password);
+        $this->user->setPassword($password);
 
         $this->assertEquals($password, $this->user->getPassword());
+    }
+
+    /**
+     * @covers Quak\ShopsCoreBundle\Entity\User::setName
+     * @covers Quak\ShopsCoreBundle\Entity\User::setName
+     */
+    public function testSetGetName()
+    {
+        $name = "Shops user";
+
+        $this->user->setName($name);
+
+        $this->assertEquals($name, $this->user->getName());
     }
 
     /**
