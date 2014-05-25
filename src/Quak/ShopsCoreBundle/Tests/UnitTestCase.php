@@ -1,10 +1,12 @@
 <?php
 namespace Quak\ShopsCoreBundle\Tests;
 
+use Quak\ShopsCoreBundle\Tests\FunctionalTestCase;
+
 /**
  * Base class for unit tests
  */
-abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
+abstract class UnitTestCase extends FunctionalTestCase
 {
 
 }

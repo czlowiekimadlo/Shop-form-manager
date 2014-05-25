@@ -3,6 +3,7 @@
 namespace Quak\ShopsAdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Quak\ShopsCoreBundle\Repository\Repository;
 
 /**
  * Administration controller
@@ -16,6 +17,16 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('QuakShopsAdminBundle:Admin:index.html.twig');
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $users = $entityManager->getRepository(Repository::USER)
+            ->fetchAllGroupedByRole();
+
+        return $this->render(
+            'QuakShopsAdminBundle:Admin:index.html.twig',
+            array(
+                'users' => $users
+            )
+        );
     }
 }

@@ -175,4 +175,34 @@ class UserTest extends UnitTestCase
         $this->assertEquals($roles, $this->user->getRoles());
         $this->assertEquals($name, $this->user->getName());
     }
+
+    /**
+     * @param string $rolePresent    role in user
+     * @param string $roleTested     role checked
+     * @param bool   $expectedResult expected result
+     *
+     * @covers Quak\ShopsCoreBundle\Entity\User::hasRole
+     *
+     * @dataProvider dataProvider_testHasRole
+     */
+    public function testHasRole($rolePresent, $roleTested, $expectedResult)
+    {
+        $this->user->setRoles(array($rolePresent));
+
+        $this->assertEquals($expectedResult,
+            $this->user->hasRole($roleTested));
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProvider_testHasRole()
+    {
+        return array(
+            array(User::ROLE_ADMIN, User::ROLE_ADMIN, true),
+            array(User::ROLE_SHOP, User::ROLE_SHOP, true),
+            array(User::ROLE_ADMIN, User::ROLE_SHOP, false),
+            array(User::ROLE_SHOP, User::ROLE_ADMIN, false)
+        );
+    }
 }

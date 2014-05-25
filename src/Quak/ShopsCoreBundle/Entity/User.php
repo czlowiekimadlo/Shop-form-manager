@@ -174,4 +174,14 @@ class User implements UserInterface, \Serializable
             $this->name
         ) = unserialize($serialized);
     }
+
+    /**
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return in_array($role, $this->roles);
+    }
 }

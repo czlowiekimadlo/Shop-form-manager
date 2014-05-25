@@ -1,4 +1,11 @@
 parameters:
+    repository.user.class: Quak\ShopsCoreBundle\Repository\UserRepository
 #    quak_shops_core.example.class: Quak\ShopsCoreBundle\Example
 
 services:
+    #repositories
+    repository.user:
+        class: %repository.user.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method:  getRepository
+        arguments: [ "QuakShopsCoreBundle:User" ]

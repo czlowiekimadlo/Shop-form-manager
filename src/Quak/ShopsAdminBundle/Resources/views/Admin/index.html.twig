@@ -1,5 +1,20 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    Admin Homepage
+    <div>
+        <h1>Administrators</h1>
+        <ul>
+            {% for user in users.ROLE_ADMIN %}
+            <li>{{ user.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h1>Shops</h1>
+        <ul>
+            {% for user in users.ROLE_SHOP %}
+            <li>{{ user.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

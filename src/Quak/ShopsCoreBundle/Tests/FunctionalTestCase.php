@@ -19,15 +19,20 @@ abstract class FunctionalTestCase extends WebTestCase
     protected $router;
 
     /**
+     * @var Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    protected $container;
+
+    /**
      * Tests setup
      */
     public function setUp()
     {
         $this->client = static::createClient();
 
-        $container = $this->client->getContainer();
+        $this->container = $this->client->getContainer();
 
-        $this->router = $container->get('router');
+        $this->router = $this->container->get('router');
     }
 
     /**
