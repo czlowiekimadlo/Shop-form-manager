@@ -14,7 +14,8 @@ class AdminControllerTest extends FunctionalTestCase
      */
     public function testIndexAction_redirectedToLogin_notLoggedIn()
     {
-        $this->client->request('GET', '/admin/');
+        $this->client->request('GET',
+            $this->generateUrl('quak_shops_admin_index'));
 
         $response = $this->client->getResponse();
         $location = $response->headers->get('location');
@@ -32,7 +33,23 @@ class AdminControllerTest extends FunctionalTestCase
         $password = 'admin1';
         $this->authenticateUser($username, $password);
 
-        $this->client->request('GET', '/admin/');
+        $this->client->request('GET',
+            $this->generateUrl('quak_shops_admin_index'));
+        $response = $this->client->getResponse();
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    }
+
+    /**
+     * @covers Quak\ShopsAdminBundle\Controller\AdminController::newUserAction
+     */
+    public function testNewUserAction_formOpens_loggedAsAdmin()
+    {
+        $username = 'admin';
+        $password = 'admin1';
+        $this->authenticateUser($username, $password);
+
+        $this->client->request('GET',
+            $this->generateUrl('quak_shops_admin_user_new'));
         $response = $this->client->getResponse();
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }

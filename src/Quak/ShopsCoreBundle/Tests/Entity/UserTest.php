@@ -91,6 +91,35 @@ class UserTest extends UnitTestCase
     }
 
     /**
+     * @covers Quak\ShopsCoreBundle\Entity\User::addRole
+     * @covers Quak\ShopsCoreBundle\Entity\User::getRoles
+     */
+    public function testAddRole()
+    {
+        $role = User::ROLE_ADMIN;
+
+        $this->user->addRole($role);
+
+        $this->assertEquals(array($role), $this->user->getRoles());
+    }
+
+    /**
+     * @covers Quak\ShopsCoreBundle\Entity\User::addRole
+     * @covers Quak\ShopsCoreBunlde\Entity\User::removeRole
+     * @covers Quak\ShopsCoreBundle\Entity\User::getRoles
+     */
+    public function testRemoveRole()
+    {
+        $roles = array(User::ROLE_ADMIN, User::ROLE_SHOP);
+        $expectedRoles = array(User::ROLE_ADMIN);
+
+        $this->user->setRoles($roles);
+        $this->user->removeRole(User::ROLE_SHOP);
+
+        $this->assertEquals($expectedRoles, $this->user->getRoles());
+    }
+
+    /**
      * @covers Quak\ShopsCoreBundle\Entity\User::setPassword
      * @covers Quak\ShopsCoreBundle\Entity\User::getPassword
      */

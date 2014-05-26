@@ -1,3 +1,8 @@
 quak_shops_admin_index:
     pattern:  /
     defaults: { _controller: QuakShopsAdminBundle:Admin:index }
+
+quak_shops_admin_user_new:
+    pattern:  /user/new
+    defaults: { _controller: QuakShopsAdminBundle:Admin:newUser }
+    methods:  [GET, POST]

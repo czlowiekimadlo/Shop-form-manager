@@ -92,6 +92,24 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param string $role
+     */
+    public function addRole($role)
+    {
+        $this->roles[] = $role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function removeRole($role)
+    {
+        if (($key = array_search($role, $this->roles)) !== false) {
+            unset($this->roles[$key]);
+        }
+    }
+
+    /**
      * @return array
      */
     public function getRoles()
