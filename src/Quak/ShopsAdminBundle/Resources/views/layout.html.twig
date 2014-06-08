@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/quakshopsadmin/css/admin.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/quakshopsadmin/js/jquery-2.1.1.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}

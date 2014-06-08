@@ -1,0 +1,12 @@
+{% extends 'QuakShopsAdminBundle::layout.html.twig' %}
+
+{% block content %}
+    {{ form(form) }}
+
+    {% if user is defined%}
+    <a href="{{ path('quak_shops_admin_user_delete', { userId : user.id }) }}">Remove this user</a>
+    <br/>
+    {% endif %}
+
+    <a href="{{ path('quak_shops_admin_index') }}{% if user.hasRole('ROLE_ADMIN') %}#administrators{% else %}#shops{% endif %}">Back</a>
+{% endblock %}

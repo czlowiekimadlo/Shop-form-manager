@@ -7,4 +7,5 @@ namespace Quak\ShopsCoreBundle\Repository;
 class Repository
 {
     const USER = 'QuakShopsCoreBundle:User';
+    const REGION = 'QuakShopsCoreBundle:Region';
 }

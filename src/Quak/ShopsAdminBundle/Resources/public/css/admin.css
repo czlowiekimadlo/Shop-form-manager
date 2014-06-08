@@ -1,0 +1,10 @@
+
+body {
+    background: grey;
+}
+
+#content {
+    width: 1000px;
+    margin: auto;
+    background: white;
+}

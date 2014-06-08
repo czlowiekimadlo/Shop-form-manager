@@ -21,3 +21,4 @@ composer.phar
 *.sublime-*
 
 # unrelated files
+docs/*

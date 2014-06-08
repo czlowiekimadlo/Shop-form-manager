@@ -1,6 +1,6 @@
 parameters:
     repository.user.class: Quak\ShopsCoreBundle\Repository\UserRepository
-#    quak_shops_core.example.class: Quak\ShopsCoreBundle\Example
+    repository.region.class: Quak\ShopsCoreBundle\Repository\RegionRepository
 
 services:
     #repositories
@@ -9,3 +9,8 @@ services:
         factory_service: doctrine.orm.entity_manager
         factory_method:  getRepository
         arguments: [ "QuakShopsCoreBundle:User" ]
+    repository.region:
+        class: %repository.region.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method:  getRepository
+        arguments: [ "QuakShopsCoreBundle:Region" ]

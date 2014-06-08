@@ -53,4 +53,38 @@ class AdminControllerTest extends FunctionalTestCase
         $response = $this->client->getResponse();
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
+
+    /**
+     * @covers Quak\ShopsAdminBundle\Controller\AdminController::editUserAction
+     */
+    public function testEditUserAction_formOpens_loggedAsAdmin()
+    {
+        $username = 'admin';
+        $password = 'admin1';
+        $this->authenticateUser($username, $password);
+
+        $this->client->request('GET',
+            $this->generateUrl('quak_shops_admin_user_edit', array(
+                'userId' => 1
+        )));
+        $response = $this->client->getResponse();
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    }
+
+    /**
+     * @covers Quak\ShopsAdminBundle\Controller\AdminController::editUserAction
+     */
+    public function testEditUserAction_notFound_invalidId()
+    {
+        $username = 'admin';
+        $password = 'admin1';
+        $this->authenticateUser($username, $password);
+
+        $this->client->request('GET',
+            $this->generateUrl('quak_shops_admin_user_edit', array(
+                'userId' => 999999999
+        )));
+        $response = $this->client->getResponse();
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+    }
 }

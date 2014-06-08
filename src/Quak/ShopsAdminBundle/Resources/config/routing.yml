@@ -6,3 +6,36 @@ quak_shops_admin_user_new:
     pattern:  /user/new
     defaults: { _controller: QuakShopsAdminBundle:Admin:newUser }
     methods:  [GET, POST]
+
+quak_shops_admin_user_edit:
+    pattern:  /user/{userId}
+    defaults: { _controller: QuakShopsAdminBundle:Admin:editUser }
+    methods:  [GET, POST]
+    requirements:
+        userId: \d+
+
+quak_shops_admin_user_delete:
+    pattern:  /user/{userId}/delete
+    defaults: { _controller: QuakShopsAdminBundle:Admin:removeUser }
+    methods:  [GET]
+    requirements:
+        userId: \d+
+
+quak_shops_admin_region_new:
+    pattern:  /region/new
+    defaults: { _controller: QuakShopsAdminBundle:Admin:newRegion }
+    methods:  [GET, POST]
+
+quak_shops_admin_region_edit:
+    pattern:  /region/{regionId}
+    defaults: { _controller: QuakShopsAdminBundle:Admin:editRegion }
+    methods:  [GET, POST]
+    requirements:
+        userId: \d+
+
+quak_shops_admin_region_delete:
+    pattern:  /region/{regionId}/delete
+    defaults: { _controller: QuakShopsAdminBundle:Admin:removeRegion }
+    methods:  [GET]
+    requirements:
+        userId: \d+

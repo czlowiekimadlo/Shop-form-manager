@@ -3,6 +3,7 @@ namespace Quak\ShopsCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Quak\ShopsCoreBundle\Entity\Region;
 
 /**
  * User entity
@@ -52,6 +53,12 @@ class User implements UserInterface, \Serializable
     private $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Quak\ShopsCoreBundle\Entity\Region")
+     * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     */
+    private $region;
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -97,6 +104,16 @@ class User implements UserInterface, \Serializable
     public function addRole($role)
     {
         $this->roles[] = $role;
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return in_array($role, $this->roles);
     }
 
     /**
@@ -158,6 +175,22 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param Region $region
+     */
+    public function setRegion(Region $region)
+    {
+        $this->region = $region;
+    }
+
+    /**
+     * @return Region|null
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
      * @inheritDoc
      */
     public function eraseCredentials()
@@ -191,15 +224,5 @@ class User implements UserInterface, \Serializable
             $this->roles,
             $this->name
         ) = unserialize($serialized);
-    }
-
-    /**
-     * @param string $role
-     *
-     * @return bool
-     */
-    public function hasRole($role)
-    {
-        return in_array($role, $this->roles);
     }
 }
