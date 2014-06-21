@@ -48,11 +48,28 @@
     </div>
 
     <div id="form" class="tabcontent">
-
+    <h1>Form fields</h1>
+        <div><a href="{{ path('quak_shops_admin_field_new') }}">Create new field</a></div>
+        <ul>
+            {% for field in fields %}
+            <li><a href="{{ path('quak_shops_admin_field_edit', { fieldId: field.id}) }}">
+                ({{field.ordering}}) {{ field.label }}
+            </a></li>
+            {% endfor %}
+        </ul>
     </div>
 
     <div id="reporting" class="tabcontent">
-
+    <h1>Scheduled reports</h1>
+        <div><a href="{{ path('quak_shops_admin_schedule_run') }}">Send reports now</a></div>
+        <div><a href="{{ path('quak_shops_admin_schedule_new') }}">Create new scheduled report</a></div>
+        <ul>
+            {% for report in reports %}
+            <li><a href="{{ path('quak_shops_admin_schedule_edit', { scheduleId: report.id}) }}">
+                {{ report.name }}
+            </a></li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}
 

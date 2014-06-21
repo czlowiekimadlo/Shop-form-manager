@@ -2,8 +2,10 @@
 namespace Quak\ShopsCoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Quak\ShopsCoreBundle\Entity\Region;
+use Quak\ShopsCoreBundle\Entity\ShopReport;
 
 /**
  * User entity
@@ -53,10 +55,31 @@ class User implements UserInterface, \Serializable
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Quak\ShopsCoreBundle\Entity\Region")
+     * @ORM\ManyToOne(targetEntity="Quak\ShopsCoreBundle\Entity\Region", inversedBy="users")
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
     private $region;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Quak\ShopsCoreBundle\Entity\ShopReport", mappedBy="user")
+     */
+    private $reports;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Quak\ShopsCoreBundle\Entity\ShopReport")
+     * @ORM\JoinColumn(name="current_report_id", referencedColumnName="id")
+     */
+    private $currentReport;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new ArrayCollection;
+    }
 
     /**
      * @param int $id
@@ -188,6 +211,38 @@ class User implements UserInterface, \Serializable
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * @param ShopReport $report
+     */
+    public function addReport(ShopReport $report)
+    {
+        $this->reports[] = $report;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReports()
+    {
+        $this->reports;
+    }
+
+    /**
+     * @param ShopReport|null $report
+     */
+    public function setCurrentReport(ShopReport $report = null)
+    {
+        $this->currentReport = $report;
+    }
+
+    /**
+     * @return ShopReport|null
+     */
+    public function getCurrentReport()
+    {
+        return $this->currentReport;
     }
 
     /**

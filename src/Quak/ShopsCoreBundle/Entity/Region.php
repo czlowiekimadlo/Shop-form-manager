@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Quak\ShopsCoreBundle\Entity\User;
 
 /**
- * User entity
+ * Region entity
  *
  * @ORM\Table(name="regions")
  * @ORM\Entity(repositoryClass="Quak\ShopsCoreBundle\Repository\RegionRepository")
@@ -44,11 +44,19 @@ class Region
     protected $users;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Quak\ShopsCoreBundle\Entity\ScheduledReport", mappedBy="regions")
+     */
+    private $scheduledReports;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->users = new ArrayCollection;
+        $this->scheduledReports = new ArrayCollection;
     }
 
     /**
@@ -121,5 +129,21 @@ class Region
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @param ScheduledReport $scheduledReport
+     */
+    public function addScheduledReport(ScheduledReport $scheduledReport)
+    {
+        $this->scheduledReports[] = $scheduledReport;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getScheduledReports()
+    {
+        return $this->scheduledReports;
     }
 }

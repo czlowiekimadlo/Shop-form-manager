@@ -1,5 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends 'QuakShopsReportBundle::layout.html.twig' %}
 
 {% block body %}
-    Report Homepage
+    {% if user.currentReport %}
+    <a href="{{ path('quak_shops_report_form', { reportId: user.currentReport.id }) }}">Edit current report</a>
+    {% else %}
+    <a href="{{ path('quak_shops_report_new') }}">Open new report</a>
+    {% endif %}
 {% endblock %}

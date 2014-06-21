@@ -1,3 +1,14 @@
 quak_shops_report_index:
     pattern:  /
     defaults: { _controller: QuakShopsReportBundle:Report:index }
+
+quak_shops_report_form:
+    pattern:  /form/{reportId}
+    defaults: { _controller: QuakShopsReportBundle:Report:report }
+    methods:  [GET, POST]
+    requirements:
+        reportId: \d+
+
+quak_shops_report_new:
+    pattern:  /new
+    defaults: { _controller: QuakShopsReportBundle:Report:new }

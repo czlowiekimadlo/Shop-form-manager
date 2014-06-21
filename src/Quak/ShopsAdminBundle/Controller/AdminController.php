@@ -26,11 +26,17 @@ class AdminController extends Controller
 
         $regions = $this->get('repository.region')->findAll();
 
+        $fields = $this->get('repository.formField')->fetchAllSortedByOrdering();
+
+        $reports = $this->get('repository.scheduledReport')->findAll();
+
         return $this->render(
             'QuakShopsAdminBundle:Admin:index.html.twig',
             array(
                 'users' => $users,
-                'regions' => $regions
+                'regions' => $regions,
+                'fields' => $fields,
+                'reports' => $reports
             )
         );
     }

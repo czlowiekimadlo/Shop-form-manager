@@ -1,7 +1,15 @@
 parameters:
-#    quak_shops_admin.example.class: Quak\ShopsAdminBundle\Example
+    reporter.xmlBuilder.class: Quak\ShopsAdminBundle\Report\XMLBuilder
+    reporter.class: Quak\ShopsAdminBundle\Report\Reporter
 
 services:
-#    quak_shops_admin.example:
-#        class: %quak_shops_admin.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    reporter.xmlBuilder:
+        class: %reporter.xmlBuilder.class%
+
+    reporter:
+        class: %reporter.class%
+        arguments:
+            manager: @doctrine.orm.entity_manager
+            builder: @reporter.xmlBuilder
+            mailer: @mailer
+            source: %source_mail%

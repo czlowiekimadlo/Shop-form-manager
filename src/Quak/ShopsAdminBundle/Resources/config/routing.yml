@@ -31,11 +31,54 @@ quak_shops_admin_region_edit:
     defaults: { _controller: QuakShopsAdminBundle:Admin:editRegion }
     methods:  [GET, POST]
     requirements:
-        userId: \d+
+        regionId: \d+
 
 quak_shops_admin_region_delete:
     pattern:  /region/{regionId}/delete
     defaults: { _controller: QuakShopsAdminBundle:Admin:removeRegion }
     methods:  [GET]
     requirements:
-        userId: \d+
+        regionId: \d+
+
+quak_shops_admin_field_new:
+    pattern:  /field/new
+    defaults: { _controller: QuakShopsAdminBundle:Reports:newFormField }
+    methods:  [GET, POST]
+
+quak_shops_admin_field_edit:
+    pattern:  /field/{fieldId}
+    defaults: { _controller: QuakShopsAdminBundle:Reports:editFormField }
+    methods:  [GET, POST]
+    requirements:
+        fieldId: \d+
+
+quak_shops_admin_field_delete:
+    pattern:  /field/{fieldId}/delete
+    defaults: { _controller: QuakShopsAdminBundle:Reports:removeFormField }
+    methods:  [GET]
+    requirements:
+        fieldId: \d+
+
+quak_shops_admin_schedule_new:
+    pattern:  /schedule/new
+    defaults: { _controller: QuakShopsAdminBundle:Reports:newSchedule }
+    methods:  [GET, POST]
+
+quak_shops_admin_schedule_edit:
+    pattern:  /schedule/{scheduleId}
+    defaults: { _controller: QuakShopsAdminBundle:Reports:editSchedule }
+    methods:  [GET, POST]
+    requirements:
+        scheduleId: \d+
+
+quak_shops_admin_schedule_delete:
+    pattern:  /schedule/{scheduleId}/delete
+    defaults: { _controller: QuakShopsAdminBundle:Reports:removeSchedule }
+    methods:  [GET]
+    requirements:
+        scheduleId: \d+
+
+quak_shops_admin_schedule_run:
+    pattern:  /schedule/run
+    defaults: { _controller: QuakShopsAdminBundle:Reports:sendReports }
+    methods:  [GET]

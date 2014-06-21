@@ -1,6 +1,10 @@
 parameters:
     repository.user.class: Quak\ShopsCoreBundle\Repository\UserRepository
     repository.region.class: Quak\ShopsCoreBundle\Repository\RegionRepository
+    repository.formField.class: Quak\ShopsCoreBundle\Repository\RegionRepository
+    repository.shopReport.class: Quak\ShopsCoreBundle\Repository\ShopReportRepository
+    repository.shopReportValue.class: Quak\ShopsCoreBundle\Repository\ShopReportValueRepository
+    repository.scheduledReport.class: Quak\ShopsCoreBundle\Repository\ScheduledReportRepository
 
 services:
     #repositories
@@ -14,3 +18,23 @@ services:
         factory_service: doctrine.orm.entity_manager
         factory_method:  getRepository
         arguments: [ "QuakShopsCoreBundle:Region" ]
+    repository.formField:
+        class: %repository.formField.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method:  getRepository
+        arguments: [ "QuakShopsCoreBundle:FormField" ]
+    repository.shopReport:
+        class: %repository.shopReport.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method:  getRepository
+        arguments: [ "QuakShopsCoreBundle:ShopReport" ]
+    repository.shopReportValue:
+        class: %repository.shopReportValue.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method:  getRepository
+        arguments: [ "QuakShopsCoreBundle:ShopReportValue" ]
+    repository.scheduledReport:
+        class: %repository.scheduledReport.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method:  getRepository
+        arguments: [ "QuakShopsCoreBundle:ScheduledReport" ]
