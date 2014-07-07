@@ -2,9 +2,14 @@
 namespace Quak\ShopsAdminBundle\Report;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\PersistentCollection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Quak\ShopsCoreBundle\Entity\User;
+use Quak\ShopsCoreBundle\Entity\Region;
+use Quak\ShopsCoreBundle\Entity\ScheduledReport;
 use Quak\ShopsCoreBundle\Repository\Repository;
 use Quak\ShopsCoreBundle\Repository\UserRepository;
+use Quak\ShopsCoreBundle\Repository\RegionRepository;
 use Quak\ShopsCoreBundle\Repository\FormFieldRepository;
 use Quak\ShopsCoreBundle\Repository\ScheduledReportRepository;
 use Quak\ShopsAdminBundle\Report\XMLBuilder;
@@ -50,6 +55,11 @@ class Reporter
     protected $userRepository;
 
     /**
+     * @var RegionRepository
+     */
+    protected $regionRepository;
+
+    /**
      * Constructor
      *
      * @param EntityManager $manager    entity manager
@@ -74,6 +84,7 @@ class Reporter
         $this->formFieldRepository = $manager
             ->getRepository(Repository::FORM_FIELD);
         $this->userRepository = $manager->getRepository(Repository::USER);
+        $this->regionRepository = $manager->getRepository(Repository::REGION);
     }
 
     /**
@@ -86,6 +97,16 @@ class Reporter
     }
 
     /**
+     * @return string
+     */
+    public function generateCurrentReport()
+    {
+        $regions = $this->regionRepository->findAll();
+
+        return $this->buildReport($regions);
+    }
+
+    /**
      * Generate and send files
      */
     protected function sendReports()
@@ -94,10 +115,12 @@ class Reporter
         $timeTag = $this->getTimeTag();
 
         foreach ($scheduledReports as $report) {
-            $xml = $this->buildReport($report);
+            $xml = $this->buildReport($report->getRegions());
 
             $message = $this->composeMessage($report, $xml, $timeTag);
-            $this->mailer->send($message);
+            if (!$this->mailer->send($message, $failures)) {
+                throw new Exception("Mail not sent");
+            }
         }
     }
 
@@ -116,15 +139,13 @@ class Reporter
     }
 
     /**
-     * @param ScheduledReport $report
+     * @param PersistentCollection|array $regions
      *
      * @return string
      */
-    protected function buildReport(ScheduledReport $report)
+    protected function buildReport($regions)
     {
         $this->builder->resetState();
-
-        $regions = $report->getRegions();
         $fields = $this->formFieldRepository->fetchAllSortedByOrdering();
 
         foreach ($regions as $region) {
@@ -133,16 +154,28 @@ class Reporter
 
             $primaryValues = array();
             $secondaryValues = array();
+            $tertiaryValues = array();
+            $quadValues = array();
 
             foreach ($fields as $field) {
                 $primaryRow = array();
                 $secondaryRow = array();
+                $tertiaryRow = array();
+                $quadRow = array();
                 $primaryRow[] = $field->getShort();
                 $secondaryRow[] = $field->getShort();
+                $tertiaryRow[] = $field->getShort();
+                $quadRow[] = $field->getShort();
 
                 foreach ($users as $user) {
-                    $primaryRow[] = '-';
-                    $secondaryRow[] = '-';
+                    if (!$user->hasRole(User::ROLE_SHOP)) {
+                        continue;
+                    }
+
+                    $primaryValue = '-';
+                    $secondaryValue = '-';
+                    $tertiaryValue = '-';
+                    $quadValue = '-';
 
                     $currentReport = $user->getCurrentReport();
 
@@ -151,53 +184,86 @@ class Reporter
 
                         foreach ($values as $value) {
                             if ($value->getField()->getId()
-                                === $field->getId())
-                            {
-                                $primaryRow[] = $value->getValue();
+                                === $field->getId()) {
+                                $primaryValue = $value->getValue();
                                 if ($value->getTwinValue() !== null) {
-                                    $secondaryRow[] = $value->getTwinValue();
+                                    $secondaryValue = $value->getTwinValue();
+                                }
+                                if ($value->getThirdValue() !== null) {
+                                    $tertiaryValue = $value->getThirdValue();
+                                }
+                                if ($value->getFourthValue() !== null) {
+                                    $quadValue = $value->getFourthValue();
                                 }
 
                                 break;
                             }
                         }
                     }
+
+                    $primaryRow[] = $primaryValue;
+                    $secondaryRow[] = $secondaryValue;
+                    $tertiaryRow[] = $tertiaryValue;
+                    $quadRow[] = $quadValue;
                 }
 
                 $primaryValues[] = $primaryRow;
                 $secondaryValues[] = $secondaryRow;
+                $tertiaryValues[] = $tertiaryRow;
+                $quadValues[] = $quadRow;
             }
 
-            $this->builder->addRow($header);
-            foreach ($primaryValues as $row) {
-                $this->builder->addRow($row);
-            }
-            $this->builder
-                ->createWorksheet($region->getShortName() . " - Bought");
+            $this->buildWorksheet(
+                $primaryValues, $header, $region->getShortName() . " - Bought"
+            );
 
-            $this->builder->addRow($header);
-            foreach ($secondaryValues as $row) {
-                $this->builder->addRow($row);
-            }
-            $this->builder
-                ->createWorksheet($region->getShortName() . " - Total");
+            $this->buildWorksheet(
+                $secondaryValues, $header, $region->getShortName() . " - Cost"
+            );
+
+            $this->buildWorksheet(
+                $tertiaryValues, $header, $region->getShortName() . " - Stock"
+            );
+
+            $this->buildWorksheet(
+                $tertiaryValues, $header, $region->getShortName() . " - BB"
+            );
         }
 
         return $this->builder->generate();
     }
 
     /**
-     * @param ArrayCollection $users
+     * @param array  $rows   rows
+     * @param array  $header header row
+     * @param string $name   worksheet name
+     */
+    protected function buildWorksheet(array $rows, array $header, $name)
+    {
+        $this->builder->addRow($header);
+        foreach ($rows as $row) {
+            $this->builder->addRow($row);
+        }
+        $this->builder
+            ->createWorksheet($name);
+    }
+
+    /**
+     * @param PersistentCollection $users
      *
      * @return array
      */
-    protected function createHeader(ArrayCollection $users)
+    protected function createHeader(PersistentCollection $users)
     {
         $header = array();
         $header[] = '';
 
         foreach ($users as $user) {
-            $header[] = $user->getName();
+            if (!$user->hasRole(User::ROLE_SHOP)) {
+                continue;
+            }
+
+            $header[] = $user->getShortName();
         }
 
         return $header;
@@ -223,10 +289,12 @@ class Reporter
 
         $message = \Swift_Message::newInstance()
             ->setSubject('[' . $timeTag . '] Report - ' . $report->getName())
-            ->setFrom($this->sourceMail)
+            ->setFrom(array($this->sourceMail => "Automatic Reporter"))
             ->setTo($report->getAddress())
-            ->setBody('')
+            ->setBody('Report for ' . $timeTag)
             ->attach($attachment);
+
+        return $message;
     }
 
     /**
@@ -237,6 +305,8 @@ class Reporter
      */
     protected function buildAttachment($filename, $xml)
     {
+        file_put_contents('/tmp/report.xml', $xml);
+
         return \Swift_Attachment::newInstance()
             ->setFilename($filename)
             ->setContentType('application/xml')

@@ -1,12 +1,13 @@
 {% extends 'QuakShopsAdminBundle::layout.html.twig' %}
 
 {% block content %}
+<div id="formWrapper">
     {{ form(form) }}
 
     {% if field is defined%}
-    <a href="{{ path('quak_shops_admin_field_delete', { fieldId : field.id }) }}">Remove this field</a>
-    <br/>
+    <a href="{{ path('quak_shops_admin_field_delete', { fieldId : field.id }) }}" class="buttonLink confirmRemoval">Remove this field</a>
     {% endif %}
 
-    <a href="{{ path('quak_shops_admin_index') }}#form">Back</a>
+    <a href="{{ path('quak_shops_admin_index') }}#form" class="buttonLink">Back</a>
+</div>
 {% endblock %}

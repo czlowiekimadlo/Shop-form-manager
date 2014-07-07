@@ -1,0 +1,83 @@
+
+#content {
+    width:         500px;
+    margin:        auto;
+    margin-top:    200px;
+
+    text-align:    center;
+
+    border:        3px solid black;
+    border-radius: 25px;
+    background:    #DDDDDD;
+
+    box-shadow:    0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#header {
+    padding: 5px 40px;
+    border-top-left-radius: 23px;
+    border-top-right-radius: 23px;
+    height: 20px;
+    border-bottom: 3px solid black;
+}
+#username { float: left; }
+#logout   { float: right; }
+
+#editbox {
+    padding: 20px 10px 10px 10px;
+}
+
+#editbox a {
+    font-family: Verdana, sans-serif;
+    font-weight: bold;
+
+    display: block;
+    padding: 3px;
+    text-align: center;
+    width: 250px;
+    border: 1px solid #555555;
+    background: #AAAAAA;
+    margin: auto;
+    text-decoration: none;
+    color: #444444;
+}
+
+
+#ShopReport {
+    padding: 20px 10px 10px 10px;
+}
+
+#ShopReport label {
+    display: block;
+    width: 200px;
+    float: left;
+    text-align: right;
+    padding-right: 5px;
+    padding-top: 5px;
+    vertical-align: center;
+    height: 20px;
+    line-height: 25px;
+}
+#ShopReport input {
+    display: block;
+    float: left;
+    width: 200px;
+    height: 25px;
+}
+
+
+#ShopReport button {
+    margin: 10px;
+    padding: 3px;
+    text-align: center;
+    width: 150px;
+    border: 1px solid #555555;
+    background: #AAAAAA;
+    clear: both;
+}
+
+#formmessage {
+    padding-top: 20px;
+    font-family: Verdana, sans-serif;
+    font-weight: bold;
+}

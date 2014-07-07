@@ -54,6 +54,20 @@ class ShopReportValue
     private $twinValue;
 
     /**
+     * @param string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $thirdValue;
+
+    /**
+     * @param string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $fourthValue;
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -131,5 +145,37 @@ class ShopReportValue
     public function getTwinValue()
     {
         return $this->twinValue;
+    }
+
+    /**
+     * @param string $thirdValue
+     */
+    public function setThirdValue($thirdValue)
+    {
+        $this->thirdValue = $thirdValue;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThirdValue()
+    {
+        return $this->thirdValue;
+    }
+
+    /**
+     * @param string $fourthValue
+     */
+    public function setFourthValue($fourthValue)
+    {
+        $this->fourthValue = $fourthValue;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFourthValue()
+    {
+        return $this->fourthValue;
     }
 }

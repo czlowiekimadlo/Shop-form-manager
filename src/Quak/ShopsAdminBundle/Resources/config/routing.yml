@@ -82,3 +82,8 @@ quak_shops_admin_schedule_run:
     pattern:  /schedule/run
     defaults: { _controller: QuakShopsAdminBundle:Reports:sendReports }
     methods:  [GET]
+
+quak_shops_admin_schedule_lookup:
+    pattern:  /schedule/current_report.xml
+    defaults: { _controller: QuakShopsAdminBundle:Reports:lookupReports }
+    methods:  [GET]

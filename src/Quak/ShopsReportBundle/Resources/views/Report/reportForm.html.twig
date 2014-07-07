@@ -1,5 +1,8 @@
 {% extends 'QuakShopsReportBundle::layout.html.twig' %}
 
 {% block content %}
+    {% if valid %}
+        <div id="formmessage">Your report has been saved.</div>
+    {% endif %}
     {{ form(form) }}
 {% endblock %}

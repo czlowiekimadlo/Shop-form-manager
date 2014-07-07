@@ -3,6 +3,7 @@ namespace Quak\ShopsAdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Quak\ShopsCoreBundle\Entity\FormField;
 use Quak\ShopsCoreBundle\Entity\ScheduledReport;
 use Quak\ShopsCoreBundle\Repository\Repository;
@@ -204,5 +205,22 @@ class ReportsController extends Controller
         return $this->redirect(
             $this->generateUrl('quak_shops_admin_index') . "#reporting"
         );
+    }
+
+    /**
+     * @return Response
+     */
+    public function lookupReportsAction()
+    {
+        $xml = $this->get('reporter')->generateCurrentReport();
+
+        $response = new Response();
+
+        $response->headers->set('Content-Type', 'application/xml');
+        $response->headers->set('Content-Disposition', 'attachment;filename="current_report.xml"');
+
+        $response->setContent($xml);
+
+        return $response;
     }
 }

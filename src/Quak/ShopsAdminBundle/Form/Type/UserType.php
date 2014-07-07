@@ -25,6 +25,7 @@ class UserType extends AbstractType
                 )
             )
             ->add('name', 'text')
+            ->add('shortname', 'text')
             ->add('roles', 'choice',
                 array(
                     'choices' => array(

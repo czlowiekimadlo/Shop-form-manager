@@ -104,7 +104,23 @@ class ReportType extends AbstractType
             self::NUMBER_FIELD_NAME . $field->getId() . 'b',
             'number',
             array(
-                'label' => $field->getLabel() . ' - Total'
+                'label' => $field->getLabel() . ' - Cost'
+            )
+        );
+
+        $builder->add(
+            self::NUMBER_FIELD_NAME . $field->getId() . 'c',
+            'number',
+            array(
+                'label' => $field->getLabel() . ' - Stock'
+            )
+        );
+
+        $builder->add(
+            self::NUMBER_FIELD_NAME . $field->getId() . 'd',
+            'number',
+            array(
+                'label' => $field->getLabel() . ' - B&B'
             )
         );
     }

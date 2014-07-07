@@ -1,14 +1,21 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
+    <link href="{{ asset('bundles/quakshopscore/css/styles.css') }}" rel="stylesheet" />
     <link href="{{ asset('bundles/quakshopsadmin/css/admin.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('bundles/quakshopsadmin/js/jquery-2.1.1.min.js') }}"></script>
+    <script src="{{ asset('bundles/quakshopsadmin/js/tabs.js') }}"></script>
+    <script src="{{ asset('bundles/quakshopsadmin/js/confirm.js') }}"></script>
+    <script src="{{ asset('bundles/quakshopsadmin/js/main.js') }}"></script>
 {% endblock %}
 
 {% block body %}
+    <div id="header">
+        <span id="logout"><a href="{{ path('logout') }}">Logout</a></span>
+    </div>
     <div id="content">
         {% block content %}{% endblock %}
     </div>

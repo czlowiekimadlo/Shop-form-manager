@@ -1,12 +1,13 @@
 {% extends 'QuakShopsAdminBundle::layout.html.twig' %}
 
 {% block content %}
+<div id="formWrapper">
     {{ form(form) }}
 
     {% if region is defined%}
-    <a href="{{ path('quak_shops_admin_region_delete', { regionId : region.id }) }}">Remove this region</a>
-    <br/>
+    <a href="{{ path('quak_shops_admin_region_delete', { regionId : region.id }) }}" class="buttonLink confirmRemoval">Remove this region</a>
     {% endif %}
 
-    <a href="{{ path('quak_shops_admin_index') }}#regions">Back</a>
+    <a href="{{ path('quak_shops_admin_index') }}#regions" class="buttonLink">Back</a>
+</div>
 {% endblock %}

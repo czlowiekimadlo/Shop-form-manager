@@ -92,7 +92,9 @@ class ReportController extends Controller
         return $this->render(
             'QuakShopsReportBundle:Report:reportForm.html.twig',
             array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'user' => $user,
+                'valid' => $form->isValid()
             )
         );
     }

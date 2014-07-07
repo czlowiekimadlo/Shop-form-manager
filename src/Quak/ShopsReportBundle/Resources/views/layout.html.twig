@@ -1,10 +1,16 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    <link href="{{ asset('bundles/quakshopscore/css/styles.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/quakshopsreport/css/styles.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
-    <ul>
-        <li><a href="{{ path('logout') }}">Logout</a></li>
-    </ul>
     <div id="content">
+        <div id="header">
+            <span id="username">{{ user.name }}</span>
+            <span id="logout"><a href="{{ path('logout') }}">Logout</a></span>
+        </div>
         {% block content %}{% endblock %}
     </div>
 {% endblock %}

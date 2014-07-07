@@ -85,7 +85,7 @@ class ReportFormValuesFactory
 
             switch ($field->getType()) {
                 case FormField::TYPE_TEXT:
-                    $key = ReportType::TEXT_FIELD_NAME . $value->getField()->getId();
+                    $key = ReportType::TEXT_FIELD_NAME . $field->getId();
                     $data[$key] = null;
                     if ($value) {
                         $data[$key] = $value->getValue();
@@ -93,7 +93,7 @@ class ReportFormValuesFactory
                     break;
 
                 case FormField::TYPE_NUMBER:
-                    $key = ReportType::NUMBER_FIELD_NAME . $value->getField()->getId();
+                    $key = ReportType::NUMBER_FIELD_NAME . $field->getId();
                     $data[$key] = null;
                     if ($value) {
                         $data[$key] = (int) $value->getValue();
@@ -101,12 +101,16 @@ class ReportFormValuesFactory
                     break;
 
                 case FormField::TYPE_NUMBER_TWIN:
-                    $key = ReportType::NUMBER_FIELD_NAME . $value->getField()->getId();
+                    $key = ReportType::NUMBER_FIELD_NAME . $field->getId();
                     $data[$key . 'a'] = null;
                     $data[$key . 'b'] = null;
+                    $data[$key . 'c'] = null;
+                    $data[$key . 'd'] = null;
                     if ($value) {
                         $data[$key . 'a'] = (int) $value->getValue();
                         $data[$key . 'b'] = (int) $value->getTwinValue();
+                        $data[$key . 'c'] = (int) $value->getThirdValue();
+                        $data[$key . 'd'] = (int) $value->getFourthValue();
                     }
                     break;
             }
@@ -189,6 +193,8 @@ class ReportFormValuesFactory
                 $key = ReportType::NUMBER_FIELD_NAME . $value->getField()->getId();
                 $value->setValue($data[$key . 'a']);
                 $value->setTwinValue($data[$key . 'b']);
+                $value->setThirdValue($data[$key . 'c']);
+                $value->setFourthValue($data[$key . 'd']);
                 break;
         }
     }

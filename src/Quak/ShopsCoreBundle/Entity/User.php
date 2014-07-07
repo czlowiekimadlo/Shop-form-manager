@@ -55,6 +55,13 @@ class User implements UserInterface, \Serializable
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
+     */
+    private $shortName;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Quak\ShopsCoreBundle\Entity\Region", inversedBy="users")
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
@@ -195,6 +202,22 @@ class User implements UserInterface, \Serializable
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $shortName
+     */
+    public function setShortName($shortName)
+    {
+        $this->shortName = $shortName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortName()
+    {
+        return $this->shortName;
     }
 
     /**

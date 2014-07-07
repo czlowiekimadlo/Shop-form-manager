@@ -25,7 +25,7 @@ class FormFieldType extends AbstractType
                     'choices' => array(
                         FormField::TYPE_TEXT => 'Text',
                         FormField::TYPE_NUMBER => 'Number',
-                        FormField::TYPE_NUMBER_TWIN => 'Two numbers'
+                        FormField::TYPE_NUMBER_TWIN => 'Numbers set'
                     ),
                     'multiple'  => false,
                     'expanded' => false

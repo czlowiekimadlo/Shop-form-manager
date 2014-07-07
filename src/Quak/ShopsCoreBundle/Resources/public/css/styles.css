@@ -1,0 +1,40 @@
+
+body {
+    background: url('../images/bg.jpg');
+    background-position: 0 50%;
+    background-attachment: fixed;
+}
+
+#loginbox {
+    width:         250px;
+    margin:        auto;
+    margin-top:    200px;
+    padding:       25px;
+
+    text-align:    center;
+
+    border:        3px solid black;
+    border-radius: 25px;
+    background:    #DDDDDD;
+
+    box-shadow:    0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#loginbox input {
+    text-align: center;
+    width: 200px;
+}
+
+#loginbox label, #loginbox button {
+    font-family: Verdana, sans-serif;
+    font-weight: bold;
+}
+
+#loginbox button {
+    padding: 3px;
+    text-align: center;
+    width: 150px;
+    border: 1px solid #555555;
+    background: #AAAAAA;
+}
+

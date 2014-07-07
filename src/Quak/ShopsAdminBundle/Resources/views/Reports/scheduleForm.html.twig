@@ -1,12 +1,13 @@
 {% extends 'QuakShopsAdminBundle::layout.html.twig' %}
 
 {% block content %}
+<div id="formWrapper">
     {{ form(form) }}
 
     {% if report is defined %}
-    <a href="{{ path('quak_shops_admin_schedule_delete', { scheduleId : report.id }) }}">Remove this scheduled report</a>
-    <br/>
+    <a href="{{ path('quak_shops_admin_schedule_delete', { scheduleId : report.id }) }}" class="buttonLink confirmRemoval">Remove this scheduled report</a>
     {% endif %}
 
-    <a href="{{ path('quak_shops_admin_index') }}#reporting">Back</a>
+    <a href="{{ path('quak_shops_admin_index') }}#reporting" class="buttonLink">Back</a>
+</div>
 {% endblock %}

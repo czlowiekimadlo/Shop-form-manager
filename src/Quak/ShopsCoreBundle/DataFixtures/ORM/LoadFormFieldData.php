@@ -18,9 +18,9 @@ class LoadFormFieldData extends AbstractFixture implements OrderedFixtureInterfa
     {
         $field = new FormField;
 
-        $field->setLabel('Cheap');
+        $field->setLabel('Something');
         $field->setShort('1p');
-        $field->setType(FormField::TYPE_NUMBER);
+        $field->setType(FormField::TYPE_NUMBER_TWIN);
         $field->setOrdering(1);
 
         $this->addReference('field', $field);

@@ -45,7 +45,7 @@ class XMLBuilder
      */
     public function resetState()
     {
-        $this->columnWidth = 200;
+        $this->columnWidth = 60;
         $this->debug = false;
         $this->rowArray = array();
         $this->rows = array();

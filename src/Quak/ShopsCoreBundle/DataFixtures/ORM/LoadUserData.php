@@ -39,6 +39,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, O
         $userAdmin = new User();
         $userAdmin->setUsername('admin');
         $userAdmin->setName('Administrator');
+        $userAdmin->setShortName('ADM');
         $userAdmin->setRoles(array(User::ROLE_ADMIN));
         $userAdmin->setRegion($region);
         $region->addUser($userAdmin);
@@ -55,6 +56,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface, O
         $userShop = new User();
         $userShop->setUsername('demoShop');
         $userShop->setName('Shop Demo');
+        $userShop->setShortName('DEMO');
         $userShop->setRoles(array(User::ROLE_SHOP));
         $userShop->setRegion($region);
         $region->addUser($userShop);

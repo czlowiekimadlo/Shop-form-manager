@@ -1,25 +1,36 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    {% if error %}
-        <div>{{ error.message }}</div>
-    {% endif %}
+    <div id="loginbox">
+        {% if error %}
+            <div id="error">{{ error.message }}</div>
+        {% endif %}
 
-    <form action="{{ path('login_check') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username"
-            value="{{ last_username }}"
-        />
+        <form action="{{ path('login_check') }}" method="post">
+            <label for="username">Username</label>
+            <br />
+            <input type="text" id="username" name="_username"
+                value="{{ last_username }}"
+            />
+            <br />
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
+            <label for="password">Password</label>
+            <br />
+            <input type="password" id="password" name="_password" />
+            <br />
+            <br />
 
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}"
-        >
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
 
-        <input type="hidden" name="_target_path" value="/" />
+            <input type="hidden" name="_target_path" value="/" />
 
-        <button type="submit" id="submit">login</button>
-    </form>
+            <button type="submit" id="submit">Login</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/quakshopscore/css/styles.css') }}" rel="stylesheet" />
 {% endblock %}

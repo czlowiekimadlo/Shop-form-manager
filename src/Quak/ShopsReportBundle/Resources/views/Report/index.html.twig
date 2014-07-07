@@ -1,9 +1,16 @@
 {% extends 'QuakShopsReportBundle::layout.html.twig' %}
 
-{% block body %}
-    {% if user.currentReport %}
-    <a href="{{ path('quak_shops_report_form', { reportId: user.currentReport.id }) }}">Edit current report</a>
-    {% else %}
-    <a href="{{ path('quak_shops_report_new') }}">Open new report</a>
-    {% endif %}
+{% block content %}
+    <div id="editbox">
+        {% if user.currentReport %}
+        <span>Report created at {{ user.currentReport.date|date("d.m.Y H:s:i") }}</span>
+        <br />
+        <br />
+        <a href="{{ path('quak_shops_report_form', { reportId: user.currentReport.id }) }}">Edit current report</a>
+        {% else %}
+        <a href="{{ path('quak_shops_report_new') }}">Open new report</a>
+        {% endif %}
+        <br />
+        </div>
+    </div>
 {% endblock %}
