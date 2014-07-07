@@ -226,7 +226,7 @@ class Reporter
             );
 
             $this->buildWorksheet(
-                $tertiaryValues, $header, $region->getShortName() . " - BB"
+                $quadValues, $header, $region->getShortName() . " - BB"
             );
         }
 

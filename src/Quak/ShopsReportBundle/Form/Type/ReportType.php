@@ -47,7 +47,11 @@ class ReportType extends AbstractType
                     break;
 
                 case FormField::TYPE_NUMBER_TWIN:
-                    $this->buildNumberTwinField($builder, $field);
+                    $this->buildSetWithBB($builder, $field);
+                    break;
+
+                case FormField::TYPE_NO_BB:
+                    $this->buildSetWithoutBB($builder, $field);
                     break;
             }
         }
@@ -90,7 +94,24 @@ class ReportType extends AbstractType
      * @param FormBuilderInterface $builder form builder
      * @param FormField            $field   field entity
      */
-    protected function buildNumberTwinField(FormBuilderInterface $builder, FormField $field)
+    protected function buildSetWithBB(FormBuilderInterface $builder, FormField $field)
+    {
+        $this->buildSetWithoutBB($builder, $field);
+
+        $builder->add(
+            self::NUMBER_FIELD_NAME . $field->getId() . 'd',
+            'number',
+            array(
+                'label' => $field->getLabel() . ' - B&B'
+            )
+        );
+    }
+
+    /**
+     * @param FormBuilderInterface $builder form builder
+     * @param FormField            $field   field entity
+     */
+    protected function buildSetWithoutBB(FormBuilderInterface $builder, FormField $field)
     {
         $builder->add(
             self::NUMBER_FIELD_NAME . $field->getId() . 'a',
@@ -113,14 +134,6 @@ class ReportType extends AbstractType
             'number',
             array(
                 'label' => $field->getLabel() . ' - Stock'
-            )
-        );
-
-        $builder->add(
-            self::NUMBER_FIELD_NAME . $field->getId() . 'd',
-            'number',
-            array(
-                'label' => $field->getLabel() . ' - B&B'
             )
         );
     }

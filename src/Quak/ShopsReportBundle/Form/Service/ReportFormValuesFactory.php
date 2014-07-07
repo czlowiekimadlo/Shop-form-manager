@@ -113,6 +113,18 @@ class ReportFormValuesFactory
                         $data[$key . 'd'] = (int) $value->getFourthValue();
                     }
                     break;
+
+                case FormField::TYPE_NO_BB:
+                    $key = ReportType::NUMBER_FIELD_NAME . $field->getId();
+                    $data[$key . 'a'] = null;
+                    $data[$key . 'b'] = null;
+                    $data[$key . 'c'] = null;
+                    if ($value) {
+                        $data[$key . 'a'] = (int) $value->getValue();
+                        $data[$key . 'b'] = (int) $value->getTwinValue();
+                        $data[$key . 'c'] = (int) $value->getThirdValue();
+                    }
+                    break;
             }
         }
 
@@ -195,6 +207,13 @@ class ReportFormValuesFactory
                 $value->setTwinValue($data[$key . 'b']);
                 $value->setThirdValue($data[$key . 'c']);
                 $value->setFourthValue($data[$key . 'd']);
+                break;
+
+            case FormField::TYPE_NO_BB:
+                $key = ReportType::NUMBER_FIELD_NAME . $value->getField()->getId();
+                $value->setValue($data[$key . 'a']);
+                $value->setTwinValue($data[$key . 'b']);
+                $value->setThirdValue($data[$key . 'c']);
                 break;
         }
     }

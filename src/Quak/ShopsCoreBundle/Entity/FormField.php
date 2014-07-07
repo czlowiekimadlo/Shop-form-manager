@@ -16,11 +16,13 @@ class FormField
     const TYPE_TEXT = 0;
     const TYPE_NUMBER = 1;
     const TYPE_NUMBER_TWIN = 2;
+    const TYPE_NO_BB = 3;
 
     public static $types = array(
         self::TYPE_TEXT => self::TYPE_TEXT,
         self::TYPE_NUMBER => self::TYPE_NUMBER,
-        self::TYPE_NUMBER_TWIN => self::TYPE_NUMBER_TWIN
+        self::TYPE_NUMBER_TWIN => self::TYPE_NUMBER_TWIN,
+        self::TYPE_NO_BB => self::TYPE_NO_BB
     );
 
     /**
