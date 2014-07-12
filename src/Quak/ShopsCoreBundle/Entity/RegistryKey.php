@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Registry key entity
  *
- * @ORM\Table(name="registry")
+ * @ORM\Table(name="app_registry")
  * @ORM\Entity(repositoryClass="Quak\ShopsCoreBundle\Repository\RegistryKeyRepository")
  */
 class RegistryKey
@@ -26,7 +26,7 @@ class RegistryKey
      *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
-    private $key;
+    private $name;
 
     /**
      * @var string
@@ -52,19 +52,19 @@ class RegistryKey
     }
 
     /**
-     * @param string $key
+     * @param string $name
      */
-    public function setKey($key)
+    public function setName($name)
     {
-        $this->key = $key;
+        $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getKey()
+    public function getName()
     {
-        return $this->key;
+        return $this->name;
     }
 
     /**

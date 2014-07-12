@@ -81,3 +81,7 @@
     font-family: Verdana, sans-serif;
     font-weight: bold;
 }
+
+#formLegend {
+    margin-bottom: 10px;
+}

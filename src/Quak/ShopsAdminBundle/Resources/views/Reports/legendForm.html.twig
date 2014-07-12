@@ -1,0 +1,9 @@
+{% extends 'QuakShopsAdminBundle::layout.html.twig' %}
+
+{% block content %}
+<div id="formWrapper">
+    {{ form(form) }}
+
+    <a href="{{ path('quak_shops_admin_index') }}#form" class="buttonLink">Back</a>
+</div>
+{% endblock %}

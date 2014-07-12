@@ -8,6 +8,6 @@
     <a href="{{ path('quak_shops_admin_user_delete', { userId : user.id }) }}" class="buttonLink confirmRemoval">Remove this user</a>
     {% endif %}
 
-    <a href="{{ path('quak_shops_admin_index') }}{% if user.hasRole('ROLE_ADMIN') %}#administrators{% else %}#shops{% endif %}" class="buttonLink">Back</a>
+    <a href="{{ path('quak_shops_admin_index') }}{% if user is defined and user.hasRole('ROLE_ADMIN') %}#administrators{% else %}#shops{% endif %}" class="buttonLink">Back</a>
 </div>
 {% endblock %}

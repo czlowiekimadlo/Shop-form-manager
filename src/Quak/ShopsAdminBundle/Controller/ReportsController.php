@@ -5,9 +5,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Quak\ShopsCoreBundle\Entity\FormField;
+use Quak\ShopsCoreBundle\Entity\RegistryKey;
 use Quak\ShopsCoreBundle\Entity\ScheduledReport;
 use Quak\ShopsCoreBundle\Repository\Repository;
 use Quak\ShopsAdminBundle\Form\Type\FormFieldType;
+use Quak\ShopsAdminBundle\Form\Type\LegendType;
 use Quak\ShopsAdminBundle\Form\Type\ScheduledReportType;
 
 /**
@@ -102,6 +104,34 @@ class ReportsController extends Controller
 
         return $this->redirect(
             $this->generateUrl('quak_shops_admin_index') . "#form"
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function editLegendAction(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $legend = $this->get('repository.registryKey')->getLegend();
+
+        $form = $this->createForm(new LegendType(), $legend);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $entityManager->persist($legend);
+            $entityManager->flush();
+        }
+
+        return $this->render(
+            'QuakShopsAdminBundle:Reports:legendForm.html.twig',
+            array(
+                'form' => $form->createView()
+            )
         );
     }
 

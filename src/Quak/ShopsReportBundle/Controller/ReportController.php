@@ -78,6 +78,7 @@ class ReportController extends Controller
 
         $reportValues = $this->get('report.values.factory');
         $savedData = $reportValues->createArrayFromReport($currentReport);
+        $legend = $this->get('repository.registryKey')->getLegend();
 
         $form = $this->createForm($this->get('form.report'), $savedData);
 
@@ -94,7 +95,8 @@ class ReportController extends Controller
             array(
                 'form' => $form->createView(),
                 'user' => $user,
-                'valid' => $form->isValid()
+                'valid' => $form->isValid(),
+                'legend' => $legend
             )
         );
     }

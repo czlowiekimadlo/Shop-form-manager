@@ -95,12 +95,21 @@
     width: 100px;
 }
 
+#formWrapper form div {
+    width: 940px;
+    margin: 5px;
+}
+
+#formWrapper form div:nth-of-type(even) {
+    background: #EEEEEE;
+}
+
 #formWrapper button {
     display: block;
     font-family: Verdana, sans-serif;
     font-weight: bold;
     padding: 3px;
-    margin: 10px;
+    margin: 10px 0 10px 0;
     text-align: center;
     border: 1px solid #555555;
     background: #AAAAAA;
@@ -109,6 +118,7 @@
     width: 940px;
 }
 
-#formWrapper form div:nth-of-type(even) {
-    background: #EEEEEE;
+#formWrapper textarea {
+    width: 500px;
+    height: 150px;
 }

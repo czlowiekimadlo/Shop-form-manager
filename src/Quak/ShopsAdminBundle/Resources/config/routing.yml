@@ -87,3 +87,8 @@ quak_shops_admin_schedule_lookup:
     pattern:  /schedule/current_report.xml
     defaults: { _controller: QuakShopsAdminBundle:Reports:lookupReports }
     methods:  [GET]
+
+quak_shops_admin_legend_edit:
+    pattern:  /legend
+    defaults: { _controller: QuakShopsAdminBundle:Reports:editLegend }
+    methods:  [GET, POST]
