@@ -12,4 +12,5 @@ class Repository
     const SHOP_REPORT = 'QuakShopsCoreBundle:ShopReport';
     const SHOP_REPORT_VALUE = 'QuakShopsCoreBundle:ShopReportValue';
     const SCHEDULED_REPORT = 'QuakShopsCoreBundle:ScheduledReport';
+    const REGISTRY_KEY = "QuakShopsCoreBundle:RegistryKey";
 }
