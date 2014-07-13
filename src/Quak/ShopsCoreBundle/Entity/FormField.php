@@ -80,6 +80,13 @@ class FormField
     private $ordering;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $loadPrevious = false;
+
+    /**
      * @param int $id
      */
     public function setId($id)
