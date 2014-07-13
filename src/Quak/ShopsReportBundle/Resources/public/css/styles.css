@@ -2,7 +2,7 @@
 #content {
     width:         500px;
     margin:        auto;
-    margin-top:    200px;
+    margin-top:    100px;
 
     text-align:    center;
 
@@ -43,13 +43,13 @@
 }
 
 
-#ShopReport {
+#shopReport {
     padding: 20px 10px 10px 10px;
 }
 
-#ShopReport label {
+#shopReport label {
     display: block;
-    width: 200px;
+    width: 100px;
     float: left;
     text-align: right;
     padding-right: 5px;
@@ -58,15 +58,37 @@
     height: 20px;
     line-height: 25px;
 }
-#ShopReport input {
+#shopReport input {
     display: block;
     float: left;
-    width: 200px;
+    width: 350px;
     height: 25px;
+}
+#shopReport table {
+    border: 0;
+}
+#shopReport table tbody {
+    width: 100%;
+}
+#shopReport table,
+#shopReport table tbody,
+#shopReport table tbody tr,
+#shopReport table tbody tr td {
+    margin: 0;
+    padding: 0;
+}
+#shopReport table tr td {
+    margin: 0;
+}
+#shopReport table tr td input, #shopReport .shortField {
+    width: 80px;
+}
+#shopReport table label {
+    width: 96px;
 }
 
 
-#ShopReport button {
+#shopReport button {
     margin: 10px;
     padding: 3px;
     text-align: center;

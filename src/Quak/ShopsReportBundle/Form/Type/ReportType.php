@@ -12,9 +12,6 @@ use Quak\ShopsCoreBundle\Repository\FormFieldRepository;
  */
 class ReportType extends AbstractType
 {
-    const TEXT_FIELD_NAME = 'textField';
-    const NUMBER_FIELD_NAME = 'numberField';
-
     /**
      * @var FormFieldRepository
      */
@@ -67,7 +64,7 @@ class ReportType extends AbstractType
     protected function buildTextField(FormBuilderInterface $builder, FormField $field)
     {
         $builder->add(
-            self::TEXT_FIELD_NAME . $field->getId(),
+            $field->getFieldName(),
             'text',
             array(
                 'label' => $field->getLabel()
@@ -82,7 +79,7 @@ class ReportType extends AbstractType
     protected function buildNumberField(FormBuilderInterface $builder, FormField $field)
     {
         $builder->add(
-            self::NUMBER_FIELD_NAME . $field->getId(),
+            $field->getFieldName(),
             'number',
             array(
                 'label' => $field->getLabel()
@@ -99,10 +96,10 @@ class ReportType extends AbstractType
         $this->buildSetWithoutBB($builder, $field);
 
         $builder->add(
-            self::NUMBER_FIELD_NAME . $field->getId() . 'd',
+            $field->getFieldName() . 'd',
             'number',
             array(
-                'label' => $field->getLabel() . ' - B&B'
+                'label' => $field->getLabel()
             )
         );
     }
@@ -114,26 +111,26 @@ class ReportType extends AbstractType
     protected function buildSetWithoutBB(FormBuilderInterface $builder, FormField $field)
     {
         $builder->add(
-            self::NUMBER_FIELD_NAME . $field->getId() . 'a',
+            $field->getFieldName() . 'a',
             'number',
             array(
-                'label' => $field->getLabel() . ' - Bought'
+                'label' => $field->getLabel()
             )
         );
 
         $builder->add(
-            self::NUMBER_FIELD_NAME . $field->getId() . 'b',
+            $field->getFieldName() . 'b',
             'number',
             array(
-                'label' => $field->getLabel() . ' - Cost'
+                'label' => $field->getLabel()
             )
         );
 
         $builder->add(
-            self::NUMBER_FIELD_NAME . $field->getId() . 'c',
+            $field->getFieldName() . 'c',
             'number',
             array(
-                'label' => $field->getLabel() . ' - Stock'
+                'label' => $field->getLabel()
             )
         );
     }

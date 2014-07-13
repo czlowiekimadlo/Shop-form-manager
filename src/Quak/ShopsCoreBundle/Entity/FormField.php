@@ -18,11 +18,28 @@ class FormField
     const TYPE_NUMBER_TWIN = 2;
     const TYPE_NO_BB = 3;
 
+    const TEXT_FIELD_NAME = 'textField';
+    const NUMBER_FIELD_NAME = 'numberField';
+
     public static $types = array(
         self::TYPE_TEXT => self::TYPE_TEXT,
         self::TYPE_NUMBER => self::TYPE_NUMBER,
         self::TYPE_NUMBER_TWIN => self::TYPE_NUMBER_TWIN,
         self::TYPE_NO_BB => self::TYPE_NO_BB
+    );
+
+    protected static $headerType = array(
+        self::TYPE_TEXT => false,
+        self::TYPE_NUMBER => true,
+        self::TYPE_NUMBER_TWIN => false,
+        self::TYPE_NO_BB => false,
+    );
+
+    protected static $tableType = array(
+        self::TYPE_TEXT => false,
+        self::TYPE_NUMBER => false,
+        self::TYPE_NUMBER_TWIN => true,
+        self::TYPE_NO_BB => true,
     );
 
     /**
@@ -140,5 +157,43 @@ class FormField
     public function getOrdering()
     {
         return $this->ordering;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHeader()
+    {
+        return self::$headerType[$this->type];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTable()
+    {
+        return self::$tableType[$this->type];
+    }
+
+    /**
+     * @return string
+     */
+    public function getFieldName()
+    {
+        switch ($this->type) {
+            case FormField::TYPE_TEXT:
+
+                return self::TEXT_FIELD_NAME . $this->id;
+
+            case FormField::TYPE_NUMBER:
+            case FormField::TYPE_NUMBER_TWIN:
+            case FormField::TYPE_NO_BB:
+
+                return self::NUMBER_FIELD_NAME . $this->id;
+
+            default:
+
+                throw new \Exception('Unsupported type');
+        }
     }
 }

@@ -85,7 +85,7 @@ class ReportFormValuesFactory
 
             switch ($field->getType()) {
                 case FormField::TYPE_TEXT:
-                    $key = ReportType::TEXT_FIELD_NAME . $field->getId();
+                    $key = FormField::TEXT_FIELD_NAME . $field->getId();
                     $data[$key] = null;
                     if ($value) {
                         $data[$key] = $value->getValue();
@@ -93,7 +93,7 @@ class ReportFormValuesFactory
                     break;
 
                 case FormField::TYPE_NUMBER:
-                    $key = ReportType::NUMBER_FIELD_NAME . $field->getId();
+                    $key = FormField::NUMBER_FIELD_NAME . $field->getId();
                     $data[$key] = null;
                     if ($value) {
                         $data[$key] = (int) $value->getValue();
@@ -101,7 +101,7 @@ class ReportFormValuesFactory
                     break;
 
                 case FormField::TYPE_NUMBER_TWIN:
-                    $key = ReportType::NUMBER_FIELD_NAME . $field->getId();
+                    $key = FormField::NUMBER_FIELD_NAME . $field->getId();
                     $data[$key . 'a'] = null;
                     $data[$key . 'b'] = null;
                     $data[$key . 'c'] = null;
@@ -115,7 +115,7 @@ class ReportFormValuesFactory
                     break;
 
                 case FormField::TYPE_NO_BB:
-                    $key = ReportType::NUMBER_FIELD_NAME . $field->getId();
+                    $key = FormField::NUMBER_FIELD_NAME . $field->getId();
                     $data[$key . 'a'] = null;
                     $data[$key . 'b'] = null;
                     $data[$key . 'c'] = null;
@@ -192,17 +192,17 @@ class ReportFormValuesFactory
     {
         switch ($value->getField()->getType()) {
             case FormField::TYPE_TEXT:
-                $key = ReportType::TEXT_FIELD_NAME . $value->getField()->getId();
+                $key = FormField::TEXT_FIELD_NAME . $value->getField()->getId();
                 $value->setValue($data[$key]);
                 break;
 
             case FormField::TYPE_NUMBER:
-                $key = ReportType::NUMBER_FIELD_NAME . $value->getField()->getId();
+                $key = FormField::NUMBER_FIELD_NAME . $value->getField()->getId();
                 $value->setValue($data[$key]);
                 break;
 
             case FormField::TYPE_NUMBER_TWIN:
-                $key = ReportType::NUMBER_FIELD_NAME . $value->getField()->getId();
+                $key = FormField::NUMBER_FIELD_NAME . $value->getField()->getId();
                 $value->setValue($data[$key . 'a']);
                 $value->setTwinValue($data[$key . 'b']);
                 $value->setThirdValue($data[$key . 'c']);
@@ -210,7 +210,7 @@ class ReportFormValuesFactory
                 break;
 
             case FormField::TYPE_NO_BB:
-                $key = ReportType::NUMBER_FIELD_NAME . $value->getField()->getId();
+                $key = FormField::NUMBER_FIELD_NAME . $value->getField()->getId();
                 $value->setValue($data[$key . 'a']);
                 $value->setTwinValue($data[$key . 'b']);
                 $value->setThirdValue($data[$key . 'c']);
