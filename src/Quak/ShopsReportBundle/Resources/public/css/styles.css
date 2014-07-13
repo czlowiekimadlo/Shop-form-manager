@@ -87,6 +87,11 @@
     width: 96px;
 }
 
+#shopReport div {
+    clear: both;
+    width: 100%;
+}
+
 
 #shopReport button {
     margin: 10px;
