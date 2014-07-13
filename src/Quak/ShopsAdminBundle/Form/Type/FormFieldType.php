@@ -33,6 +33,7 @@ class FormFieldType extends AbstractType
                 )
             )
             ->add('ordering', 'number')
+            ->add('loadPrevious', 'checkbox')
             ->add('save', 'submit');
     }
 

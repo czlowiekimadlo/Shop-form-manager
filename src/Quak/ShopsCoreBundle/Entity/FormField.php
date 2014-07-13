@@ -167,6 +167,22 @@ class FormField
     }
 
     /**
+     * @param bool $previous
+     */
+    public function setLoadPrevious($previous)
+    {
+        $this->loadPrevious = $previous;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoadPrevious()
+    {
+        return $this->loadPrevious;
+    }
+
+    /**
      * @return bool
      */
     public function isHeader()

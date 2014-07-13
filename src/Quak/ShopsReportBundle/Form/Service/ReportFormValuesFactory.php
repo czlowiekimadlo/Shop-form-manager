@@ -28,6 +28,11 @@ class ReportFormValuesFactory
     protected $formFieldRepository;
 
     /**
+     * @var ShopReportRepository
+     */
+    protected $shopReportRepository;
+
+    /**
      * @var ShopReportValueRepository
      */
     protected $shopReportValueRepository;
@@ -46,6 +51,8 @@ class ReportFormValuesFactory
 
         $this->formFieldRepository = $manager
             ->getRepository(Repository::FORM_FIELD);
+        $this->shopReportRepository = $manager
+            ->getRepository(Repository::SHOP_REPORT);
         $this->shopReportValueRepository = $manager
             ->getRepository(Repository::SHOP_REPORT_VALUE);
     }
@@ -80,7 +87,20 @@ class ReportFormValuesFactory
 
         $values = $report->getValues();
 
+        $lastReport = $this->shopReportRepository->fetchLastSentReportByUser(
+            $report->getUser()
+        );
+
         foreach ($this->formFields as $field) {
+            $lastValue = null;
+            if ($field->isLoadPrevious()) {
+                if ($lastReport) {
+                    $lastValues = $lastReport->getValues();
+
+                    $lastValue = $this->matchField($field, $lastValues);
+                }
+            }
+
             $value = $this->matchField($field, $values);
 
             switch ($field->getType()) {
@@ -97,6 +117,9 @@ class ReportFormValuesFactory
                     $data[$key] = null;
                     if ($value) {
                         $data[$key] = (int) $value->getValue();
+                    }
+                    if (empty($data[$key]) && $lastValue) {
+                        $data[$key] = (int) $lastValue->getValue();
                     }
                     break;
 
