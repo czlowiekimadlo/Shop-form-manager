@@ -2,6 +2,7 @@
 namespace Quak\ShopsCoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Quak\ShopsCoreBundle\Entity\User;
 
 /**
  * User repository class
@@ -13,7 +14,11 @@ class UserRepository extends EntityRepository
      */
     public function fetchAllGroupedByRole()
     {
-        $result = array();
+        $result = array(
+            User::ROLE_SHOP => array(),
+            User::ROLE_ADMIN => array(),
+            User::ROLE_REGION_ADMIN => array()
+        );
 
         $users = $this->findAll();
 
@@ -21,10 +26,6 @@ class UserRepository extends EntityRepository
             $roles = $user->getRoles();
 
             foreach ($roles as $role) {
-                if (!isset($result[$role])) {
-                    $result[$role] = array();
-                }
-
                 $result[$role][] = $user;
             }
         }

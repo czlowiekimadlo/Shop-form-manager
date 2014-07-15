@@ -1,6 +1,8 @@
 parameters:
     reporter.xmlBuilder.class: Quak\ShopsAdminBundle\Report\XMLBuilder
     reporter.class: Quak\ShopsAdminBundle\Report\Reporter
+    admin.access.class: Quak\ShopsAdminBundle\Access\AdminRegionAccess
+    filter.region.class: Quak\ShopsAdminBundle\Access\Filter\RegionFilter
 
 services:
     reporter.xmlBuilder:
@@ -13,3 +15,11 @@ services:
             builder: @reporter.xmlBuilder
             mailer: @mailer
             source: %source_mail%
+
+    filter.region:
+        class: %filter.region.class%
+
+    admin.access:
+        class: %admin.access.class%
+        arguments:
+            regionFilter: @filter.region

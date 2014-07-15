@@ -4,9 +4,11 @@
     <ul id="tabs">
         <li><a href="#reporting">Reporting</a></li>
         <li><a href="#shops">Shops</a></li>
+        {% if user.hasRole('ROLE_ADMIN') %}
         <li><a href="#administrators">Administrators</a></li>
         <li><a href="#regions">Regions</a></li>
         <li><a href="#form">Form</a></li>
+        {% endif %}
     </ul>
     <div id="shops" class="tabcontent">
         <h1>Shops</h1>
@@ -30,6 +32,13 @@
         <div><a href="{{ path('quak_shops_admin_user_new') }}" class="buttonLink">Create new administrator</a></div>
         <ul>
             {% for user in users.ROLE_ADMIN %}
+            <li>
+                <a href="{{ path('quak_shops_admin_user_edit', { userId: user.id}) }}">
+                {{ user.name }}
+                </a>
+            </li>
+            {% endfor %}
+            {% for user in users.ROLE_REGION_ADMIN %}
             <li>
                 <a href="{{ path('quak_shops_admin_user_edit', { userId: user.id}) }}">
                 {{ user.name }}
@@ -67,6 +76,7 @@
     <div id="reporting" class="tabcontent">
     <h1>Scheduled reports</h1>
         <div><a href="{{ path('quak_shops_admin_schedule_lookup') }}" class="buttonLink">Download current report</a></div>
+        {% if user.hasRole('ROLE_ADMIN') %}
         <br />
         <div><a href="{{ path('quak_shops_admin_schedule_new') }}" class="buttonLink">Create new scheduled report</a></div>
         <div><a href="{{ path('quak_shops_admin_schedule_run') }}" class="buttonLink">Send reports now</a></div>
@@ -77,5 +87,6 @@
             </a></li>
             {% endfor %}
         </ul>
+        {% endif %}
     </div>
 {% endblock %}

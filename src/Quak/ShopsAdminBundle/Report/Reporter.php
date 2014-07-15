@@ -97,11 +97,17 @@ class Reporter
     }
 
     /**
+     * @param Region $region
+     *
      * @return string
      */
-    public function generateCurrentReport()
+    public function generateCurrentReport(Region $region = null)
     {
-        $regions = $this->regionRepository->findAll();
+        if (!$region) {
+            $regions = $this->regionRepository->findAll();
+        } else {
+            $regions = array($region);
+        }
 
         return $this->buildReport($regions);
     }

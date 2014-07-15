@@ -16,15 +16,28 @@ class LoadRegionData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        $this->createRegion('England', 'ENG', $manager);
+        $this->createRegion('Scotland', 'SCO', $manager);
+        $this->createRegion('Ireland', 'IRE', $manager);
+
+        $manager->flush();
+    }
+
+    /**
+     * @param string        $name    region name
+     * @param string        $short   short region name
+     * @param ObjectManager $manager manager
+     */
+    protected function createRegion($name, $short, ObjectManager $manager)
+    {
         $region = new Region;
 
-        $region->setName('England');
-        $region->setShortName('ENG');
+        $region->setName($name);
+        $region->setShortName($short);
 
-        $this->addReference('regionEngland', $region);
+        $this->addReference('region' . $name, $region);
 
         $manager->persist($region);
-        $manager->flush();
     }
 
     /**

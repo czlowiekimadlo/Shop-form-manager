@@ -22,7 +22,14 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
+        $adminAccess = $this->get('admin.access');
+        $user = $this->getUser();
+
         $users = $this->get('repository.user')->fetchAllGroupedByRole();
+        $users[User::ROLE_SHOP] = $adminAccess->filterForUser(
+            $users[User::ROLE_SHOP],
+            $user
+        );
 
         $regions = $this->get('repository.region')->findAll();
 
@@ -33,6 +40,7 @@ class AdminController extends Controller
         return $this->render(
             'QuakShopsAdminBundle:Admin:index.html.twig',
             array(
+                'user' => $user,
                 'users' => $users,
                 'regions' => $regions,
                 'fields' => $fields,
@@ -50,9 +58,11 @@ class AdminController extends Controller
      */
     public function newUserAction(Request $request)
     {
+        $currentUser = $this->getUser();
+
         $user = new User;
 
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(new UserType($currentUser), $user);
 
         $form->handleRequest($request);
 
@@ -72,7 +82,12 @@ class AdminController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $target = $user->hasRole(User::ROLE_ADMIN) ? '#administrators' : '#shops';
+            if ($user->hasRole(User::ROLE_ADMIN) ||
+                $user->hasRole(User::ROLE_REGION_ADMIN)) {
+                $target = '#administrators';
+            } else {
+                $target = '#shops';
+            }
 
             return $this->redirect(
                 $this->generateUrl('quak_shops_admin_index') . $target
@@ -97,6 +112,7 @@ class AdminController extends Controller
     public function editUserAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
 
         $userId = $request->attributes->get('userId');
 
@@ -108,7 +124,7 @@ class AdminController extends Controller
 
         $currentPassword = $user->getPassword();
 
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(new UserType($currentUser), $user);
 
         $form->handleRequest($request);
 
@@ -161,7 +177,12 @@ class AdminController extends Controller
         $entityManager->remove($user);
         $entityManager->flush();
 
-        $target = $user->hasRole(User::ROLE_ADMIN) ? '#administrators' : '#shops';
+        if ($user->hasRole(User::ROLE_ADMIN) ||
+            $user->hasRole(User::ROLE_REGION_ADMIN)) {
+            $target = '#administrators';
+        } else {
+            $target = '#shops';
+        }
 
         return $this->redirect(
             $this->generateUrl('quak_shops_admin_index') . $target

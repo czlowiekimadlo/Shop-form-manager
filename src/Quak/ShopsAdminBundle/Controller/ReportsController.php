@@ -4,6 +4,7 @@ namespace Quak\ShopsAdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Quak\ShopsCoreBundle\Entity\User;
 use Quak\ShopsCoreBundle\Entity\FormField;
 use Quak\ShopsCoreBundle\Entity\RegistryKey;
 use Quak\ShopsCoreBundle\Entity\ScheduledReport;
@@ -242,12 +243,20 @@ class ReportsController extends Controller
      */
     public function lookupReportsAction()
     {
-        $xml = $this->get('reporter')->generateCurrentReport();
+        $user = $this->getUser();
+        if ($user->hasRole(User::ROLE_ADMIN)) {
+            $xml = $this->get('reporter')->generateCurrentReport();
+        } else {
+            $xml = $this->get('reporter')
+                ->generateCurrentReport($user->getRegion());
+        }
+
 
         $response = new Response();
 
         $response->headers->set('Content-Type', 'application/xml');
-        $response->headers->set('Content-Disposition', 'attachment;filename="current_report.xml"');
+        $response->headers->set('Content-Disposition',
+            'attachment;filename="current_report.xml"');
 
         $response->setContent($xml);
 
