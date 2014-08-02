@@ -6,6 +6,7 @@ use Doctrine\ORM\PersistentCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Quak\ShopsCoreBundle\Entity\User;
 use Quak\ShopsCoreBundle\Entity\Region;
+use Quak\ShopsCoreBundle\Entity\FormField;
 use Quak\ShopsCoreBundle\Entity\ScheduledReport;
 use Quak\ShopsCoreBundle\Repository\Repository;
 use Quak\ShopsCoreBundle\Repository\UserRepository;
@@ -162,12 +163,14 @@ class Reporter
             $secondaryValues = array();
             $tertiaryValues = array();
             $quadValues = array();
+            $combinedValues = array();
 
             foreach ($fields as $field) {
                 $primaryRow = array();
                 $secondaryRow = array();
                 $tertiaryRow = array();
                 $quadRow = array();
+
                 $primaryRow[] = $field->getShort();
                 $secondaryRow[] = $field->getShort();
                 $tertiaryRow[] = $field->getShort();
@@ -217,7 +220,39 @@ class Reporter
                 $secondaryValues[] = $secondaryRow;
                 $tertiaryValues[] = $tertiaryRow;
                 $quadValues[] = $quadRow;
+
+                switch ($field->getType()) {
+                    case FormField::TYPE_TEXT:
+                    case FormField::TYPE_NUMBER:
+                        $combinedValues[] = $primaryRow;
+                        break;
+
+                    case FormField::TYPE_NO_BB:
+                        $primaryRow[0] .= " - Bought";
+                        $secondaryRow[0] .= " - Cost";
+                        $tertiaryRow[0] .= " - Stock";
+                        $combinedValues[] = $primaryRow;
+                        $combinedValues[] = $secondaryRow;
+                        $combinedValues[] = $tertiaryRow;
+                        break;
+
+                    case FormField::TYPE_NUMBER_TWIN:
+                        $primaryRow[0] .= " - Bought";
+                        $secondaryRow[0] .= " - Cost";
+                        $tertiaryRow[0] .= " - Stock";
+                        $quadRow[0] .= " - BB";
+                        $combinedValues[] = $primaryRow;
+                        $combinedValues[] = $secondaryRow;
+                        $combinedValues[] = $tertiaryRow;
+                        $combinedValues[] = $quadRow;
+                        break;
+                }
+
             }
+
+            $this->buildWorksheet(
+                $combinedValues, $header, $region->getShortName()
+            );
 
             $this->buildWorksheet(
                 $primaryValues, $header, $region->getShortName() . " - Bought"
