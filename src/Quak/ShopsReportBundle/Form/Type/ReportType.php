@@ -67,7 +67,8 @@ class ReportType extends AbstractType
             $field->getFieldName(),
             'text',
             array(
-                'label' => $field->getLabel()
+                'label' => $field->getLabel(),
+                'required' => false
             )
         );
     }
@@ -82,7 +83,8 @@ class ReportType extends AbstractType
             $field->getFieldName(),
             'number',
             array(
-                'label' => $field->getLabel()
+                'label' => $field->getLabel(),
+                'required' => false
             )
         );
     }
@@ -99,7 +101,8 @@ class ReportType extends AbstractType
             $field->getFieldName() . 'd',
             'number',
             array(
-                'label' => $field->getLabel()
+                'label' => $field->getLabel(),
+                'required' => false
             )
         );
     }
@@ -114,7 +117,8 @@ class ReportType extends AbstractType
             $field->getFieldName() . 'a',
             'number',
             array(
-                'label' => $field->getLabel()
+                'label' => $field->getLabel(),
+                'required' => false
             )
         );
 
@@ -122,7 +126,8 @@ class ReportType extends AbstractType
             $field->getFieldName() . 'b',
             'number',
             array(
-                'label' => $field->getLabel()
+                'label' => $field->getLabel(),
+                'required' => false
             )
         );
 
@@ -130,7 +135,8 @@ class ReportType extends AbstractType
             $field->getFieldName() . 'c',
             'number',
             array(
-                'label' => $field->getLabel()
+                'label' => $field->getLabel(),
+                'required' => false
             )
         );
     }
