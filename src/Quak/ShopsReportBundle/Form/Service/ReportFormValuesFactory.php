@@ -130,11 +130,18 @@ class ReportFormValuesFactory
                     $data[$key . 'c'] = null;
                     $data[$key . 'd'] = null;
                     if ($value) {
-                        $data[$key . 'a'] = (int) $value->getValue();
-                        $data[$key . 'b'] = (int) $value->getTwinValue();
-                        $data[$key . 'c'] = (int) $value->getThirdValue();
-                        $data[$key . 'd'] = (int) $value->getFourthValue();
+                        $data[$key . 'a'] = $value->getValue();
+                        $data[$key . 'b'] = $value->getTwinValue();
+                        $data[$key . 'c'] = $value->getThirdValue();
+                        $data[$key . 'd'] = $value->getFourthValue();
                     }
+                    if ($data[$key . 'c'] === null && $lastValue) {
+                       $data[$key . 'c'] = (int) $lastValue->getThirdValue();
+                    }
+                    if ($data[$key . 'd'] === null && $lastValue) {
+                       $data[$key . 'd'] = (int) $lastValue->getFourthValue();
+                    }
+
                     break;
 
                 case FormField::TYPE_NO_BB:
@@ -143,9 +150,12 @@ class ReportFormValuesFactory
                     $data[$key . 'b'] = null;
                     $data[$key . 'c'] = null;
                     if ($value) {
-                        $data[$key . 'a'] = (int) $value->getValue();
-                        $data[$key . 'b'] = (int) $value->getTwinValue();
-                        $data[$key . 'c'] = (int) $value->getThirdValue();
+                        $data[$key . 'a'] = $value->getValue();
+                        $data[$key . 'b'] = $value->getTwinValue();
+                        $data[$key . 'c'] = $value->getThirdValue();
+                    }
+                    if ($data[$key . 'c'] === null && $lastValue) {
+                       $data[$key . 'c'] = (int) $lastValue->getThirdValue();
                     }
                     break;
             }
