@@ -116,10 +116,10 @@ class ReportFormValuesFactory
                     $key = FormField::NUMBER_FIELD_NAME . $field->getId();
                     $data[$key] = null;
                     if ($value) {
-                        $data[$key] = (int) $value->getValue();
+                        $data[$key] = $value->getValue();
                     }
                     if (empty($data[$key]) && $lastValue) {
-                        $data[$key] = (int) $lastValue->getValue();
+                        $data[$key] = $lastValue->getValue();
                     }
                     break;
 
@@ -136,10 +136,10 @@ class ReportFormValuesFactory
                         $data[$key . 'd'] = $value->getFourthValue();
                     }
                     if ($data[$key . 'c'] === null && $lastValue) {
-                       $data[$key . 'c'] = (int) $lastValue->getThirdValue();
+                       $data[$key . 'c'] = $lastValue->getThirdValue();
                     }
                     if ($data[$key . 'd'] === null && $lastValue) {
-                       $data[$key . 'd'] = (int) $lastValue->getFourthValue();
+                       $data[$key . 'd'] = $lastValue->getFourthValue();
                     }
 
                     break;
@@ -155,7 +155,7 @@ class ReportFormValuesFactory
                         $data[$key . 'c'] = $value->getThirdValue();
                     }
                     if ($data[$key . 'c'] === null && $lastValue) {
-                       $data[$key . 'c'] = (int) $lastValue->getThirdValue();
+                       $data[$key . 'c'] = $lastValue->getThirdValue();
                     }
                     break;
             }
