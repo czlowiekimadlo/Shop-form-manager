@@ -20,11 +20,13 @@ class ShopReportRepository extends EntityRepository
 
         $builder = $this->createQueryBuilder('sr')
             ->select('sr')
+            ->where('sr.user = :user')
+            ->setParameter('user', $user)
             ->orderBy('sr.id', 'DESC')
             ->setMaxResults(1);
 
         if ($currentReport) {
-            $builder->where('sr.id != :current')
+            $builder->andWhere('sr.id != :current')
                 ->setParameter('current', $currentReport->getId());
         }
 
