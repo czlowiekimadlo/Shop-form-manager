@@ -174,8 +174,8 @@ class AdminController extends Controller
             throw $this->createNotFoundException('The user does not exist');
         }
 
-        $entityManager->remove($user);
-        $entityManager->flush();
+        $model = $this->get('admin.model.shop');
+        $model->removeShop($user);
 
         if ($user->hasRole(User::ROLE_ADMIN) ||
             $user->hasRole(User::ROLE_REGION_ADMIN)) {

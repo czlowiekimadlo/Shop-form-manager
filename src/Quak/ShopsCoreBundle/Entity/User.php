@@ -86,7 +86,7 @@ class User implements UserInterface, \Serializable
      */
     public function __construct()
     {
-        $this->users = new ArrayCollection;
+        $this->reports = new ArrayCollection;
     }
 
     /**
@@ -250,7 +250,7 @@ class User implements UserInterface, \Serializable
      */
     public function getReports()
     {
-        $this->reports;
+        return $this->reports;
     }
 
     /**

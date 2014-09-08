@@ -3,6 +3,7 @@ parameters:
     reporter.class: Quak\ShopsAdminBundle\Report\Reporter
     admin.access.class: Quak\ShopsAdminBundle\Access\AdminRegionAccess
     filter.region.class: Quak\ShopsAdminBundle\Access\Filter\RegionFilter
+    admin.model.shop.class: Quak\ShopsAdminBundle\Service\ShopModel
 
 services:
     reporter.xmlBuilder:
@@ -23,3 +24,8 @@ services:
         class: %admin.access.class%
         arguments:
             regionFilter: @filter.region
+
+    admin.model.shop:
+        class: %admin.model.shop.class%
+        arguments:
+            manager: @doctrine.orm.entity_manager
