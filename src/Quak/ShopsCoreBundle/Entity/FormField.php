@@ -91,7 +91,22 @@ class FormField
      *
      * @ORM\Column(type="boolean")
      */
+    private $readonly = false;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="boolean")
+     */
     private $loadPrevious = false;
+
+    /**
+     * @var FormField
+     *
+     * @ORM\ManyToOne(targetEntity="Quak\ShopsCoreBundle\Entity\FormField")
+     * @ORM\JoinColumn(name="previous_field_id", referencedColumnName="id")
+     */
+    private $previousField;
 
     /**
      * @param int $id
@@ -121,6 +136,14 @@ class FormField
      * @return string
      */
     public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
     {
         return $this->label;
     }
@@ -190,6 +213,22 @@ class FormField
     }
 
     /**
+     * @param bool $readonly
+     */
+    public function setReadonly($readonly)
+    {
+        $this->readonly = $readonly;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReadonly()
+    {
+        return $this->readonly;
+    }
+
+    /**
      * @param bool $previous
      */
     public function setLoadPrevious($previous)
@@ -203,6 +242,22 @@ class FormField
     public function isLoadPrevious()
     {
         return $this->loadPrevious;
+    }
+
+    /**
+     * @param FormField|null $previousField
+     */
+    public function setPreviousField(FormField $previousField = null)
+    {
+        $this->previousField = $previousField;
+    }
+
+    /**
+     * @return FormField|null
+     */
+    public function getPreviousField()
+    {
+        return $this->previousField;
     }
 
     /**

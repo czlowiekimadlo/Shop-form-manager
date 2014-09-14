@@ -13,6 +13,7 @@ services:
         class: %reporter.class%
         arguments:
             manager: @doctrine.orm.entity_manager
+            shopReportModel: @model.shopReport
             builder: @reporter.xmlBuilder
             mailer: @mailer
             source: %source_mail%

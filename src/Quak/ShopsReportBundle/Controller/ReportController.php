@@ -77,7 +77,11 @@ class ReportController extends Controller
         }
 
         $reportValues = $this->get('report.values.factory');
-        $savedData = $reportValues->createArrayFromReport($currentReport);
+        $statusReport = $this->get('model.shopReport')
+            ->getCurrentStatusReport($user);
+        $savedData = $reportValues->createArrayFromReport(
+            $currentReport, $statusReport
+        );
         $legend = $this->get('repository.registryKey')->getLegend();
         $fields = $this->get('repository.formField')->fetchAllSortedByOrdering();
 

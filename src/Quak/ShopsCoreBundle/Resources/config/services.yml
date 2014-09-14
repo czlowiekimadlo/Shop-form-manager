@@ -7,6 +7,9 @@ parameters:
     repository.scheduledReport.class: Quak\ShopsCoreBundle\Repository\ScheduledReportRepository
     repository.registryKey.class: Quak\ShopsCoreBundle\Repository\RegistryKeyRepository
 
+    report.values.factory.class: Quak\ShopsCoreBundle\Services\ReportFormValuesFactory
+    model.shopReport.class: Quak\ShopsCoreBundle\Services\ShopReportModel
+
 services:
     #repositories
     repository.user:
@@ -44,3 +47,15 @@ services:
         factory_service: doctrine.orm.entity_manager
         factory_method:  getRepository
         arguments: [ "QuakShopsCoreBundle:RegistryKey" ]
+
+    report.values.factory:
+        class: %report.values.factory.class%
+        arguments:
+            manager: @doctrine.orm.entity_manager
+
+    model.shopReport:
+        class: %model.shopReport.class%
+        arguments:
+            manager: @doctrine.orm.entity_manager
+            shopReportRepository: @repository.shopReport
+            reportFormValuesFactory: @report.values.factory

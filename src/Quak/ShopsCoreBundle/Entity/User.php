@@ -82,6 +82,12 @@ class User implements UserInterface, \Serializable
     private $currentReport;
 
     /**
+     * @ORM\OneToOne(targetEntity="Quak\ShopsCoreBundle\Entity\ShopReport")
+     * @ORM\JoinColumn(name="status_report_id", referencedColumnName="id")
+     */
+    private $statusReport;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -267,6 +273,22 @@ class User implements UserInterface, \Serializable
     public function getCurrentReport()
     {
         return $this->currentReport;
+    }
+
+    /**
+     * @param ShopReport|null $report
+     */
+    public function setStatusReport(ShopReport $report = null)
+    {
+        $this->statusReport = $report;
+    }
+
+    /**
+     * @return ShopReport|null
+     */
+    public function getStatusReport()
+    {
+        return $this->statusReport;
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php
-namespace Quak\ShopsReportBundle\Form\Service;
+namespace Quak\ShopsCoreBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +10,6 @@ use Quak\ShopsCoreBundle\Entity\ShopReportValue;
 use Quak\ShopsCoreBundle\Repository\Repository;
 use Quak\ShopsCoreBundle\Repository\FormFieldRepository;
 use Quak\ShopsCoreBundle\Repository\ShopReportValueRepository;
-use Quak\ShopsReportBundle\Form\Type\ReportType;
 
 /**
  * Factory for form values
@@ -75,11 +74,15 @@ class ReportFormValuesFactory
     }
 
     /**
-     * @param ShopReport $report
+     * @param ShopReport $report       current report
+     * @param ShopReport $statusReport status report
      *
      * @return array
      */
-    public function createArrayFromReport(ShopReport $report)
+    public function createArrayFromReport(
+        ShopReport $report,
+        ShopReport $statusReport = null
+    )
     {
         $this->init();
 
@@ -87,17 +90,20 @@ class ReportFormValuesFactory
 
         $values = $report->getValues();
 
-        $lastReport = $this->shopReportRepository->fetchLastSentReportByUser(
-            $report->getUser()
-        );
-
         foreach ($this->formFields as $field) {
             $lastValue = null;
             if ($field->isLoadPrevious()) {
-                if ($lastReport) {
-                    $lastValues = $lastReport->getValues();
+                if ($statusReport) {
+                    $lastValues = $statusReport->getValues();
 
-                    $lastValue = $this->matchField($field, $lastValues);
+                    $previousField = $field->getPreviousField();
+                    if (!$previousField) {
+                        $previousField = $field;
+                    }
+
+                    $lastValue = $this->matchField(
+                        $previousField, $lastValues
+                    );
                 }
             }
 
@@ -201,12 +207,12 @@ class ReportFormValuesFactory
     }
 
     /**
-     * @param FormField            $field  field
-     * @param PersistentCollection $values values
+     * @param FormField $field  field
+     * @param mixed     $values values
      *
      * @return ShopReportValue|null
      */
-    protected function matchField(FormField $field, PersistentCollection $values)
+    protected function matchField(FormField $field, $values)
     {
         foreach ($values as $value) {
             if ($field === $value->getField()) {

@@ -13,6 +13,7 @@ use Quak\ShopsCoreBundle\Repository\UserRepository;
 use Quak\ShopsCoreBundle\Repository\RegionRepository;
 use Quak\ShopsCoreBundle\Repository\FormFieldRepository;
 use Quak\ShopsCoreBundle\Repository\ScheduledReportRepository;
+use Quak\ShopsCoreBundle\Services\ShopReportModel;
 use Quak\ShopsAdminBundle\Report\XMLBuilder;
 
 /**
@@ -24,6 +25,11 @@ class Reporter
      * @var EntityManager
      */
     protected $manager;
+
+    /**
+     * @var ShopReportModel
+     */
+    protected $shopReportModel;
 
     /**
      * @var XMLBuilder
@@ -63,13 +69,15 @@ class Reporter
     /**
      * Constructor
      *
-     * @param EntityManager $manager    entity manager
-     * @param XMLBuilder    $builder    xml builder
-     * @param \Swift_Mailer $mailer     mailer
-     * @param string        $sourceMail source mail
+     * @param EntityManager   $manager         entity manager
+     * @param ShopReportModel $shopReportModel shop report model
+     * @param XMLBuilder      $builder         xml builder
+     * @param \Swift_Mailer   $mailer          mailer
+     * @param string          $sourceMail      source mail
      */
     public function __construct(
         EntityManager $manager,
+        ShopReportModel $shopReportModel,
         XMLBuilder $builder,
         \Swift_Mailer $mailer,
         $sourceMail
@@ -139,6 +147,8 @@ class Reporter
         $users = $this->userRepository->findAll();
 
         foreach ($users as $user) {
+            $statusReport;
+
             $user->setCurrentReport(null);
         }
 

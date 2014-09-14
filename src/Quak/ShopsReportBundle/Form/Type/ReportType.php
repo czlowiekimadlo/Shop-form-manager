@@ -18,11 +18,24 @@ class ReportType extends AbstractType
     protected $formFieldRepository;
 
     /**
+     * @var boolean
+     */
+    protected $overrideReadonlyFields = false;
+
+    /**
      * @param FormFieldRepository $formFieldRepository
      */
     public function __construct(FormFieldRepository $formFieldRepository)
     {
         $this->formFieldRepository = $formFieldRepository;
+    }
+
+    /**
+     * @param boolean $overrideReadonlyFields
+     */
+    public function setOverride($overrideReadonlyFields)
+    {
+        $this->overrideReadonlyFields = $overrideReadonlyFields;
     }
 
     /**
@@ -68,7 +81,8 @@ class ReportType extends AbstractType
             'text',
             array(
                 'label' => $field->getLabel(),
-                'required' => false
+                'required' => false,
+                'disabled' => $field->isReadonly() && !$this->overrideReadonlyFields
             )
         );
     }
@@ -84,7 +98,8 @@ class ReportType extends AbstractType
             'number',
             array(
                 'label' => $field->getLabel(),
-                'required' => false
+                'required' => false,
+                'disabled' => $field->isReadonly() && !$this->overrideReadonlyFields
             )
         );
     }
@@ -102,7 +117,8 @@ class ReportType extends AbstractType
             'number',
             array(
                 'label' => $field->getLabel(),
-                'required' => false
+                'required' => false,
+                'disabled' => $field->isReadonly() && !$this->overrideReadonlyFields
             )
         );
     }
@@ -118,7 +134,8 @@ class ReportType extends AbstractType
             'number',
             array(
                 'label' => $field->getLabel(),
-                'required' => false
+                'required' => false,
+                'disabled' => $field->isReadonly() && !$this->overrideReadonlyFields
             )
         );
 
@@ -127,7 +144,8 @@ class ReportType extends AbstractType
             'number',
             array(
                 'label' => $field->getLabel(),
-                'required' => false
+                'required' => false,
+                'disabled' => $field->isReadonly() && !$this->overrideReadonlyFields
             )
         );
 
@@ -136,7 +154,8 @@ class ReportType extends AbstractType
             'number',
             array(
                 'label' => $field->getLabel(),
-                'required' => false
+                'required' => false,
+                'disabled' => $field->isReadonly() && !$this->overrideReadonlyFields
             )
         );
     }

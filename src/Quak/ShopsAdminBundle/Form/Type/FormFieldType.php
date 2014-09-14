@@ -20,7 +20,11 @@ class FormFieldType extends AbstractType
         $builder
             ->add('label', 'text')
             ->add('short', 'text')
-            ->add('colour', 'text')
+            ->add('colour', 'text',
+                array(
+                    'required' => false
+                )
+            )
             ->add('type', 'choice',
                 array(
                     'choices' => array(
@@ -34,9 +38,19 @@ class FormFieldType extends AbstractType
                 )
             )
             ->add('ordering', 'number')
+            ->add('readonly', 'checkbox', array(
+                'required' => false
+            ))
             ->add('loadPrevious', 'checkbox', array(
                 'required' => false
             ))
+            ->add('previousField', 'entity',
+                array(
+                    'class' => 'Quak\ShopsCoreBundle\Entity\FormField',
+                    'multiple' => false,
+                    'expanded' => false
+                )
+            )
             ->add('save', 'submit');
     }
 

@@ -276,4 +276,49 @@ class AdminController extends Controller
             $this->generateUrl('quak_shops_admin_index') . "#regions"
         );
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function editCurrentReportAction(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+
+        $shopId = $request->attributes->get('shopId');
+
+        $user = $this->get('repository.user')->findOneById($shopId);
+
+        $reportValues = $this->get('report.values.factory');
+        $statusReport = $this->get('model.shopReport')
+            ->getCurrentStatusReport($user);
+        $savedData = $reportValues->createArrayFromReport(
+            $statusReport
+        );
+        $fields = $this->get('repository.formField')->fetchAllSortedByOrdering();
+
+        $this->get('form.report')->setOverride(true);
+
+        $form = $this->createForm($this->get('form.report'), $savedData);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            $reportValues->createValuesFromArray($statusReport, $data);
+        }
+
+        return $this->render(
+            'QuakShopsAdminBundle:Admin:reportForm.html.twig',
+            array(
+                'form' => $form->createView(),
+                'user' => $user,
+                'valid' => $form->isValid(),
+                'fields' => $fields
+            )
+        );
+    }
 }

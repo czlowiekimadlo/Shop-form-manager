@@ -92,3 +92,10 @@ quak_shops_admin_legend_edit:
     pattern:  /legend
     defaults: { _controller: QuakShopsAdminBundle:Reports:editLegend }
     methods:  [GET, POST]
+
+quak_shops_admin_report_edit:
+    pattern:  /report/{shopId}
+    defaults: { _controller: QuakShopsAdminBundle:Admin:editCurrentReport }
+    methods:  [GET, POST]
+    requirements:
+        shopId: \d+

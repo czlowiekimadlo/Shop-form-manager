@@ -1,14 +1,8 @@
 parameters:
     form.report.class: Quak\ShopsReportBundle\Form\Type\ReportType
-    report.values.factory.class: Quak\ShopsReportBundle\Form\Service\ReportFormValuesFactory
 
 services:
     form.report:
         class: %form.report.class%
         arguments:
             formFieldRepository: @repository.formField
-
-    report.values.factory:
-        class: %report.values.factory.class%
-        arguments:
-            manager: @doctrine.orm.entity_manager

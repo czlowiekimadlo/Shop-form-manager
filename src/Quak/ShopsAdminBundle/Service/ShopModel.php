@@ -29,6 +29,7 @@ class ShopModel
     public function removeShop(User $shop)
     {
         $shop->setCurrentReport(null);
+        $shop->setStatusReport(null);
         $this->manager->flush();
 
         $reports = $shop->getReports();

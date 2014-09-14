@@ -1,0 +1,62 @@
+{% extends 'QuakShopsAdminBundle::layout.html.twig' %}
+
+{% block content %}
+<div id="formWrapper">
+    {% if valid %}
+        <div id="formmessage">Report has been saved.</div>
+    {% endif %}
+
+    {{ form_start(form, {'attr': {'id': 'shopReport'}}) }}
+
+        {% for field in fields %}
+            {% if field.header %}
+                {{ form_row(attribute(form, field.fieldName), {'attr': {'class': 'shortField'}}) }}
+            {% endif %}
+        {% endfor %}
+
+        <table>
+            <tr>
+                <th></th>
+                <th>Bought</th>
+                <th>Cost</th>
+                <th>Stock</th>
+                <th>B&amp;B</th>
+            </tr>
+
+        {% for field in fields %}
+            {% if field.table %}
+            <tr>
+                <td>{{ form_label(attribute(form, field.fieldName ~ 'a')) }}</td>
+                <td>
+                {{ form_widget(attribute(form, field.fieldName ~ 'a')) }}
+                </td>
+                <td>
+                {{ form_widget(attribute(form, field.fieldName ~ 'b')) }}
+                </td>
+                <td>
+                {{ form_widget(attribute(form, field.fieldName ~ 'c')) }}
+                </td>
+                {% if attribute(form, field.fieldName ~ 'd') is defined %}
+                    <td>
+                    {{ form_widget(attribute(form, field.fieldName ~ 'd')) }}
+                    </td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+            {% endif %}
+        {% endfor %}
+
+        </table>
+
+        {% for field in fields %}
+            {% if not field.header and not field.table %}
+                {{ form_row(attribute(form, field.fieldName)) }}
+            {% endif %}
+        {% endfor %}
+
+    {{ form_end(form) }}
+
+    <a href="{{ path('quak_shops_admin_index') }}#shops" class="buttonLink">Back</a>
+</div>
+{% endblock %}
