@@ -200,6 +200,7 @@ class ReportFormValuesFactory
         $value = new ShopReportValue;
         $value->setField($field);
         $value->setReport($report);
+        $report->addValue($value);
 
         $this->manager->persist($value);
 
