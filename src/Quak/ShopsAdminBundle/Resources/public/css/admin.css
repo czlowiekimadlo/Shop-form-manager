@@ -155,6 +155,7 @@
 }
 #shopReport table {
     border: 0;
+    clear: both;
 }
 #shopReport table tbody {
     width: 100%;
