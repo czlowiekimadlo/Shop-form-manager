@@ -64,7 +64,7 @@ class ShopReportModel
                 $this->updateStatusReport($statusReport, $lastReport);
             }
 
-            $user->setStatusReport();
+            $user->setStatusReport($statusReport);
 
             $this->manager->flush();
         }
