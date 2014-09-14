@@ -20,6 +20,7 @@ class FormFieldType extends AbstractType
         $builder
             ->add('label', 'text')
             ->add('short', 'text')
+            ->add('colour', 'text')
             ->add('type', 'choice',
                 array(
                     'choices' => array(

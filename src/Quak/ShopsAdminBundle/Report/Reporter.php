@@ -154,6 +154,7 @@ class Reporter
     {
         $this->builder->resetState();
         $fields = $this->formFieldRepository->fetchAllSortedByOrdering();
+        $this->addStyles($fields);
 
         foreach ($regions as $region) {
             $users = $region->getUsers();
@@ -171,10 +172,10 @@ class Reporter
                 $tertiaryRow = array();
                 $quadRow = array();
 
-                $primaryRow[] = $field->getShort();
-                $secondaryRow[] = $field->getShort();
-                $tertiaryRow[] = $field->getShort();
-                $quadRow[] = $field->getShort();
+                $primaryRow[] = $this->prepareCell($field, $field->getShort());
+                $secondaryRow[] = $this->prepareCell($field, $field->getShort());
+                $tertiaryRow[] = $this->prepareCell($field, $field->getShort());
+                $quadRow[] = $this->prepareCell($field, $field->getShort());
 
                 foreach ($users as $user) {
                     if (!$user->hasRole(User::ROLE_SHOP)) {
@@ -210,10 +211,10 @@ class Reporter
                         }
                     }
 
-                    $primaryRow[] = $primaryValue;
-                    $secondaryRow[] = $secondaryValue;
-                    $tertiaryRow[] = $tertiaryValue;
-                    $quadRow[] = $quadValue;
+                    $primaryRow[] = $this->prepareCell($field, $primaryValue);
+                    $secondaryRow[] = $this->prepareCell($field, $secondaryValue);
+                    $tertiaryRow[] = $this->prepareCell($field, $tertiaryValue);
+                    $quadRow[] = $this->prepareCell($field, $quadValue);
                 }
 
                 $primaryValues[] = $primaryRow;
@@ -228,19 +229,19 @@ class Reporter
                         break;
 
                     case FormField::TYPE_NO_BB:
-                        $primaryRow[0] .= " - Bought";
-                        $secondaryRow[0] .= " - Cost";
-                        $tertiaryRow[0] .= " - Stock";
+                        $primaryRow[0] = $this->prepareCell($field, $field->getShort() . " - Bought");
+                        $secondaryRow[0] = $this->prepareCell($field, $field->getShort() . " - Cost");
+                        $tertiaryRow[0] = $this->prepareCell($field, $field->getShort() . " - Stock");
                         $combinedValues[] = $primaryRow;
                         $combinedValues[] = $secondaryRow;
                         $combinedValues[] = $tertiaryRow;
                         break;
 
                     case FormField::TYPE_NUMBER_TWIN:
-                        $primaryRow[0] .= " - Bought";
-                        $secondaryRow[0] .= " - Cost";
-                        $tertiaryRow[0] .= " - Stock";
-                        $quadRow[0] .= " - BB";
+                        $primaryRow[0] = $this->prepareCell($field, $field->getShort() . " - Bought");
+                        $secondaryRow[0] = $this->prepareCell($field, $field->getShort() . " - Cost");
+                        $tertiaryRow[0] = $this->prepareCell($field, $field->getShort() . " - Stock");
+                        $quadRow[0] = $this->prepareCell($field, $field->getShort() . " - BB");
                         $combinedValues[] = $primaryRow;
                         $combinedValues[] = $secondaryRow;
                         $combinedValues[] = $tertiaryRow;
@@ -272,6 +273,47 @@ class Reporter
         }
 
         return $this->builder->generate();
+    }
+
+    /**
+     * @param array $fields
+     */
+    protected function addStyles(array $fields)
+    {
+        foreach ($fields as $field) {
+            $colour = $field->getColour();
+
+            if (!empty($colour)) {
+                $parameters = array(
+                    'bgcolor' => $colour
+                );
+
+                $this->builder->addStyle(
+                    'cellStyle' . $field->getId(),
+                    $parameters
+                );
+            }
+        }
+    }
+
+    /**
+     * @param FormField $field Field entity
+     * @param mixed     $value cell value
+     *
+     * @return mixed
+     */
+    protected function prepareCell(FormField $field, $value)
+    {
+        $colour = $field->getColour();
+
+        if (empty($colour)) {
+            return $value;
+        }
+
+        return array(
+            'data' => $value,
+            'attach_style' => 'cellStyle' . $field->getId()
+        );
     }
 
     /**

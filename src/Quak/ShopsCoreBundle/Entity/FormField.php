@@ -66,6 +66,13 @@ class FormField
     private $short;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $colour;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="integer")
@@ -132,6 +139,22 @@ class FormField
     public function getShort()
     {
         return $this->short;
+    }
+
+    /**
+     * @param string $colour
+     */
+    public function setColour($colour)
+    {
+        $this->colour = $colour;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColour()
+    {
+        return $this->colour;
     }
 
     /**

@@ -278,6 +278,7 @@ class XMLBuilder
 	</ExcelWorkbook>
 	<Styles>
 	    <Style ss:ID="Default" ss:Name="Default"/>
+        $styles
 	</Styles>
 EOF;
 
