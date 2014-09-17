@@ -147,7 +147,14 @@ class Reporter
         $users = $this->userRepository->findAll();
 
         foreach ($users as $user) {
-            $statusReport;
+            $currentReport = $user->getCurrentReport();
+            $statusReport = $this->shopReportModel
+                ->getCurrentStatusReport($user);
+
+            $this->shopReportModel->updateStatusReport(
+                $statusReport,
+                $currentReport
+            );
 
             $user->setCurrentReport(null);
         }
