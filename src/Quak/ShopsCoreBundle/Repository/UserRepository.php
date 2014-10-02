@@ -3,6 +3,7 @@ namespace Quak\ShopsCoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Quak\ShopsCoreBundle\Entity\User;
+use Quak\ShopsCoreBundle\Entity\Region;
 
 /**
  * User repository class
@@ -31,5 +32,19 @@ class UserRepository extends EntityRepository
         }
 
         return $result;
+    }
+
+    /**
+     * @param Region $region
+     *
+     * @return array
+     */
+    public function fetchSortedByOrdering(Region $region)
+    {
+        return $this->findBy(array(
+            'region' => $region
+        ), array(
+            'ordering' => 'ASC'
+        ));
     }
 }

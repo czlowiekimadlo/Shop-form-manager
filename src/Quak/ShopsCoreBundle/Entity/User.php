@@ -88,6 +88,13 @@ class User implements UserInterface, \Serializable
     private $statusReport;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ordering;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -289,6 +296,26 @@ class User implements UserInterface, \Serializable
     public function getStatusReport()
     {
         return $this->statusReport;
+    }
+
+    /**
+     * @param int $ordering
+     */
+    public function setOrdering($ordering)
+    {
+        $this->ordering = $ordering;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrdering()
+    {
+        if ($this->ordering === null) {
+            return $this->id;
+        }
+
+        return $this->ordering;
     }
 
     /**

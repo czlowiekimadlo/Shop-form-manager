@@ -71,6 +71,7 @@ class UserType extends AbstractType
                 )
             )
             ->add('region', 'entity', $regionOptions)
+            ->add('ordering', 'number')
             ->add('save', 'submit');
     }
 

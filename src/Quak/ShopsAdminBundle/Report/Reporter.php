@@ -87,6 +87,7 @@ class Reporter
         $this->builder = $builder;
         $this->mailer = $mailer;
         $this->sourceMail = $sourceMail;
+        $this->shopReportModel = $shopReportModel;
 
         $this->scheduledReportRepository = $manager
             ->getRepository(Repository::SCHEDULED_REPORT);
@@ -151,10 +152,12 @@ class Reporter
             $statusReport = $this->shopReportModel
                 ->getCurrentStatusReport($user);
 
-            $this->shopReportModel->updateStatusReport(
-                $statusReport,
-                $currentReport
-            );
+            if ($currentReport) {
+                $this->shopReportModel->updateStatusReport(
+                    $statusReport,
+                    $currentReport
+                );
+            }
 
             $user->setCurrentReport(null);
         }
@@ -174,7 +177,8 @@ class Reporter
         $this->addStyles($fields);
 
         foreach ($regions as $region) {
-            $users = $region->getUsers();
+            $users = $this->userRepository
+                ->fetchSortedByOrdering($region);
             $header = $this->createHeader($users);
 
             $primaryValues = array();
@@ -349,11 +353,11 @@ class Reporter
     }
 
     /**
-     * @param PersistentCollection $users
+     * @param mixed $users
      *
      * @return array
      */
-    protected function createHeader(PersistentCollection $users)
+    protected function createHeader($users)
     {
         $header = array();
         $header[] = '';
