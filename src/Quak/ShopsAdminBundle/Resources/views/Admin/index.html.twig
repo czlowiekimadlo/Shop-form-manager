@@ -16,9 +16,9 @@
         <ul>
             {% for user in users.ROLE_SHOP %}
             <li>
+            ({{ user.ordering }})
             <a href="{{ path('quak_shops_admin_report_edit', { shopId: user.id}) }}">
             {{ user.name }}</a>
-            ({{ user.ordering }})
             <a href="{{ path('quak_shops_admin_user_edit', { userId: user.id}) }}">
             [Edit]</a> (
             {% if user.currentReport %}
