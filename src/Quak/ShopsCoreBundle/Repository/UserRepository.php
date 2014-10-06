@@ -44,7 +44,7 @@ class UserRepository extends EntityRepository
         return $this->createQueryBuilder('u')
             ->where('u.region = :region')
             ->setParameter('region', $region)
-            ->orderBy('u.ordering')
+            ->orderBy('u.ordering', 'ASC')
             ->getQuery()
             ->getResult();
     }
