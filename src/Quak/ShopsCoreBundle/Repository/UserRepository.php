@@ -41,10 +41,11 @@ class UserRepository extends EntityRepository
      */
     public function fetchSortedByOrdering(Region $region)
     {
-        return $this->findBy(array(
-            'region' => $region
-        ), array(
-            'ordering' => 'ASC'
-        ));
+        return $this->createQueryBuilder('u')
+            ->where('u.region = :region')
+            ->setParameter('region', $region)
+            ->orderBy('u.ordering')
+            ->getQuery()
+            ->getResult();
     }
 }
